@@ -1,0 +1,621 @@
+@import url('https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+.navbar {
+  font-family: "Protest Riot", sans-serif;
+  box-shadow: 0px 1px rgb(31, 30, 30);
+  justify-content: space-between;
+  background-color: #1e1e1e;
+  align-items: center;
+  padding: 10px 20px;
+  position: fixed;
+  display: flex;
+  z-index: 100;
+  height: var(--sm-size);
+  right: 0;
+  left: 0;
+  top: 0;
+}
+
+.navbar a {
+  color: #e8e8e8;
+  text-decoration: none;
+}
+
+.navbar a:hover,
+a.active {
+  text-decoration: underline var(--auth-color);
+  transition: .4s ease-in-out;
+}
+
+.logo {
+  font-size: 1.5rem;
+  z-index: 100;
+}
+
+.menu-icon {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.menu {
+  display: flex;
+}
+
+.menu ul {
+  list-style-type: none;
+  justify-content: center;
+  margin-right: 20px;
+  display: flex;
+}
+
+.menu li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.user {
+  list-style: none;
+}
+
+
+/* Search bar */
+
+.search-container {
+  position: relative;
+  display: inline-block;
+}
+
+.search-button {
+  padding: 8px;
+  padding-right: 15px;
+  background-color: transparent;
+  color: #e8e8e8;
+  border: none;
+  cursor: pointer;
+}
+
+.search-input {
+  display: none;
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  padding: 8px;
+  padding-right: 15px;
+  background-color: rgb(93, 93, 93);
+  border-radius: 10px;
+  outline: 1px solid #00a6fb;
+  border: 0;
+  outline-offset: 3px;
+  color: var(--background);
+  font-size: 14px;
+  line-height: 20px;
+  width: 200px;
+  animation: slide .3s ease-out;
+}
+
+.search-input::placeholder {
+  color: var(--background);
+}
+
+.search-input.active {
+  display: block;
+}
+
+@keyframes slide {
+  from {
+    top: 0;
+  }
+
+  to {
+    top: 100%;
+  }
+}
+
+
+/* Sub link */
+
+.sub-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Protest Riot", sans-serif;
+}
+
+.sub-line a {
+  color: #e8e8e8;
+  text-decoration: none;
+}
+
+.sub-line a.active {
+  color: rgb(66, 217, 255);
+  text-decoration: underline;
+}
+
+.sub-line a:hover {
+  color: rgb(66, 217, 255);
+  text-decoration: underline;
+}
+
+.sub-line ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+.sub-line li {
+  margin: 0 10px;
+  text-align: center;
+}
+
+/* Submenu */
+
+.submenu {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  height: var(--sm-size);
+  top: var(--sm-size);
+  width: 100%;
+  background-color: #474747;
+  padding: 5px;
+  right: 0;
+  left: 0;
+  z-index: 99;
+}
+
+/* Toggle */
+
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  --background: #3b3b3b;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--background);
+  transition: .5s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: 50%;
+  left: 10%;
+  bottom: 15%;
+  box-shadow: inset 8px -4px 0px 0px #fef797;
+  background: var(--background);
+  transition: .5s;
+}
+
+input:checked+.slider {
+  background-color: var(--background);
+}
+
+input:checked+.slider:before {
+  transform: translateX(100%);
+  box-shadow: inset 15px -4px 0px 15px #fff000;
+}
+
+/* Footer  */
+footer {
+  position: fixed;
+  background-color: #1e1e1e;
+  padding: 10px 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  box-shadow: 0 0 2px var(--box-shadow-day-night);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+hr {
+  width: 100%;
+}
+
+.info-social {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info p {
+  margin: 0;
+  font-size: 14px;
+  color: #e8e8e8;
+}
+
+.info a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.info a:hover {
+  text-decoration: underline;
+}
+
+.social-icon-div {
+  display: flex;
+}
+
+.social-icon {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.social-icon li {
+  margin-left: 15px;
+}
+
+.social-icon a {
+  color: #e8e8e8;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.social-icon a:hover {
+  color: #007bff;
+}
+
+.footer-about p {
+  font-style: normal;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background-color: #e8e8e8;
+  color: var(--menu-color);
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 2;
+}
+
+.back-to-top.show {
+  display: block;
+  opacity: 1;
+}
+
+.main {
+  margin-top: 90px;
+  flex-grow: 1;
+  margin-bottom: 80px;
+  text-align: center;
+}
+
+.home {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.home-image {
+  background-image: url('../images/canva.jpg');
+}
+
+.home h1,
+p {
+  font-family: "Protest Riot", sans-serif;
+}
+
+.Explore {
+  height: 30px;
+  width: 160px;
+  border-radius: 8px;
+  font-family: "Protest Riot", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  color: var(--button-color);
+  background: transparent;
+  border-color: var(--button-color);
+  border-style: double;
+  cursor: pointer;
+}
+
+.Explore:hover {
+  background-color: var(--hover-color);
+  transition: 0.9s;
+}
+
+.swiper-container {
+  width: 100%;
+  background-color: var(--background);
+  padding: 20px;
+  color: var(--text-color);
+}
+
+.swiper-container h3 {
+  text-align: center;
+}
+
+.mySwiper {
+  width: 80%;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  color: var(--button-color) !important;
+}
+
+.card {
+  background-color: var(--background);
+  border-radius: 10px;
+  box-shadow: -1px 0px 6px -2px var(--shadow-color);
+  padding: 20px;
+  text-align: center;
+  height: 100%;
+  margin: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h4 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.button {
+  display: inline-block;
+  background-color: transparent;
+  letter-spacing: 2px;
+  color: var(--auth-color);
+  border: 2px solid var(--button-color);
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: .8rem;
+  /* transition: background-color 0.3s ease-in-out; */
+}
+
+a.button {
+  color: var(--button-color);
+}
+
+/* User */
+
+.login {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 25rem;
+  color: var(--text-color);
+  place-items: center;
+  
+}
+
+.login-tem {
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.login-tem h1 {
+  margin-bottom: 10px;
+}
+
+.login-tem p {
+  margin: 10px 0;
+}
+
+.login-tem input {
+  width: calc(100%);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--auth-color);
+  box-sizing: border-box;
+  background-color: transparent;
+}
+
+.password-field {
+  position: relative;
+}
+
+.show-password {
+  position: absolute;
+  top: 40%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.login-tem button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border-style: none;
+  background-color: var(--button-color--form);
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.login-tem button:hover {
+  background-color: #0056b3;
+}
+
+.login-tem p .account {
+  color: var(--auth-color);
+  cursor: pointer;
+}
+
+.message {
+  color: var(--text-color);
+  margin: 10px 0;
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+/* Contact  */
+/* .my-form {
+  margin-top: 1rem;
+} */
+
+.form-container {
+  background-color: var(--background);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-container input,
+textarea,
+#reason {
+  width: 400px;
+  padding: .5rem;
+  margin: .4rem;
+  border-radius: 5px;
+  border: 1px solid var(--auth-color);
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+#contact-btn {
+  width: 400px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border-style: none;
+  background-color: var(--button-color--form);
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+option {
+  background-color: #ffff;
+  color: #3b3b3b;
+}
+
+::placeholder {
+  color: var(--text-color);
+}
+
+.recent-articles {
+  max-width: 1000px;
+  margin: 0 auto;
+  color: var(--text-color);
+}
+
+.recent-articles h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.article {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--text-color);
+  color: var(--text-color);
+  padding: 20px 0;
+  margin: 1rem;
+}
+
+.image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid var(--button-color);
+}
+
+.content {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.article-header h3 {
+  margin: 0;
+}
+
+.date {
+  font-weight: bold;
+}
+
+.description {
+  margin: 10px 0;
+  white-space: pre-wrap;
+  text-align: start;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.read-more {
+  text-decoration: none;
+  font-weight: bold;
+  float: inline-end;
+  color: var(--button-color);
+  text-decoration: underline;
+}
