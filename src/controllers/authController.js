@@ -1,32 +1,25 @@
-const User = require('../models/User');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
+import User from '../models/User.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+import nodemailer from 'nodemailer';
 
-// Signup
-const signup = async (req, res) => {
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+};
+
+export const signup = async (req, res) => {
     const { name, email, password } = req.body;
 
     try {
-        let user = await User.findOne({ email });
-        if (user) {
-            return res.status(400).json({ msg: 'User already exists' });
+        const userExists = await User.findOne({ email });
+        if (userExists) {
+            return res.status(400).json({ message: 'User already exists' });
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+        const user = await User.create({ name, email, password });
+        const verificationToken = generateToken(user._id);
 
-        const emailToken = jwt.sign({ email }, process.env.EMAIL_TOKEN_SECRET, {
-            expiresIn: process.env.EMAIL_TOKEN_EXPIRES_IN,
-        });
-
-        user = new User({
-            name,
-            email,
-            password: hashedPassword,
-            emailToken,
-        });
-
+        user.verificationToken = verificationToken;
         await user.save();
 
         const transporter = nodemailer.createTransport({
@@ -40,82 +33,64 @@ const signup = async (req, res) => {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: user.email,
-            subject: 'Verify your email',
-            text: `Please verify your email by clicking the following link: 
-            ${req.protocol}://${req.get('host')}/api/auth/verify-email?token=${emailToken}`,
+            subject: 'Email Verification',
+            text: `Please verify your email by clicking the following link: ${req.protocol}://${req.get('host')}/api/auth/verify-email?token=${verificationToken}`,
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                console.log('Error sending email:', error);
-                return res.status(500).json({ msg: 'Error sending verification email' });
+                return res.status(500).json({ message: 'Failed to send verification email' });
             } else {
-                console.log('Email sent:', info.response);
-                res.json({ msg: 'Signup successful, please verify your email' });
+                res.status(201).json({ message: 'User registered. Please check your email to verify your account.' });
             }
         });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
     }
 };
 
-// Login
-const login = async (req, res) => {
+export const login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ msg: 'Invalid credentials' });
+            return res.status(400).json({ message: 'Invalid credentials' });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({ msg: 'Invalid credentials' });
+            return res.status(400).json({ message: 'Invalid credentials' });
         }
 
-        const payload = {
-            user: {
-                id: user.id,
-            },
-        };
+        if (!user.isVerified) {
+            return res.status(400).json({ message: 'Please verify your email first' });
+        }
 
-        jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN }, (err, token) => {
-            if (err) throw err;
-            res.json({ token });
-        });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
+        const token = generateToken(user._id);
+        res.json({ token });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
     }
 };
 
-// Email Verification
-const verifyEmail = async (req, res) => {
-    try {
-        const { token } = req.query;
+export const verifyEmail = async (req, res) => {
+    const { token } = req.query;
 
-        const decoded = jwt.verify(token, process.env.EMAIL_TOKEN_SECRET);
-        const user = await User.findOne({ email: decoded.email });
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.id);
 
         if (!user) {
-            return res.status(400).json({ msg: 'Invalid token' });
+            return res.status(400).json({ message: 'Invalid token' });
         }
 
         user.isVerified = true;
-        user.emailToken = null;
+        user.verificationToken = undefined;
         await user.save();
 
-        res.json({ msg: 'Email verified successfully' });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
+        res.json({ message: 'Email verified successfully' });
+    } catch (error) {
+        res.status(400).json({ message: 'Invalid token' });
     }
-};
-
-module.exports = {
-    signup,
-    login,
-    verifyEmail,
 };

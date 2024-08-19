@@ -1,10 +1,13 @@
-import express from 'express';
+import { Router } from 'express';
+// import authMiddleware from '../middlewares/authMiddleware';
 
-const router = express.Router();
+import authMiddleware from '../middlewares/authMiddleware.js'
 
-// Example protected route
-router.get('/', (req, res) => {
-    res.json({ message: 'This is a protected route!' });
+const router = Router();
+
+// Protected Route
+router.get('/protected', authMiddleware, (req, res) => {
+  res.json({ msg: 'This is a protected route' });
 });
 
 export default router;

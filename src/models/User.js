@@ -1,30 +1,24 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    isVerified: {
-        type: Boolean,
-        default: false,
-    },
-    emailToken: {
-        type: String,
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-    },
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // Simple email regex
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+}, {
+  timestamps: true, // Adds createdAt and updatedAt fields
 });
 
-module.exports = mongoose.model('User', UserSchema);
+// Optional: Add instance methods or static methods here if needed
+
+export const User = mongoose.model('User', UserSchema);

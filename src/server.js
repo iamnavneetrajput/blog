@@ -1,5 +1,4 @@
 import express from 'express';
-import mongoose from 'mongoose'; // Import mongoose for graceful shutdown
 import connectDB from '../config/db.js'; // Import the database connection module
 import authRoutes from './routes/authRoutes.js';
 import protectedRoutes from './routes/protectedRoutes.js';
@@ -29,7 +28,7 @@ app.use(limiter);
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api', protectedRoutes); // Add protected routes
+// app.use('/api', protectedRoutes); 
 
 // Connect to MongoDB
 connectDB();
