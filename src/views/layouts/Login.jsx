@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
+import OAuth from '../partials/OAuth';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -84,7 +85,7 @@ const Login = () => {
               </button>
 
               <p>Or Login with</p>
-              <button type="button"><FontAwesomeIcon icon={faGoogle} /> Google</button>
+              <OAuth/>
               <button type="button"><FontAwesomeIcon icon={faFacebook} /> Facebook</button>
 
               <p>Don't have an account? <span className='account'><Link className='account' to='/register'>Register.</Link></span></p>

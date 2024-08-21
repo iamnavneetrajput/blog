@@ -116,7 +116,6 @@ a.active {
   }
 }
 
-
 /* Sub link */
 
 .sub-line {
@@ -126,31 +125,40 @@ a.active {
   font-family: "Protest Riot", sans-serif;
 }
 
-.sub-line a {
-  color: #e8e8e8;
-  text-decoration: none;
-}
-
-.sub-line a.active {
-  color: rgb(66, 217, 255);
-  text-decoration: underline;
-}
-
-.sub-line a:hover {
-  color: rgb(66, 217, 255);
-  text-decoration: underline;
-}
-
 .sub-line ul {
   display: flex;
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 .sub-line li {
   margin: 0 10px;
   text-align: center;
+  display: flex;
+  align-items: center;
 }
+
+.sub-line a {
+  color: #e8e8e8;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.sub-line a.active {
+  text-decoration: underline;
+}
+
+.sub-line a:hover {
+  text-decoration: underline;
+}
+
+.sub-line svg {
+  margin-right: 5px;
+  font-size: 20px;
+}
+
 
 /* Submenu */
 
@@ -224,7 +232,7 @@ input:checked+.slider:before {
 footer {
   position: fixed;
   background-color: #1e1e1e;
-  padding: 10px 0;
+  padding: 10px 0 5px;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -297,7 +305,7 @@ hr {
 
 .back-to-top {
   position: fixed;
-  bottom: 80px;
+  bottom: 70px;
   right: 20px;
   background-color: #e8e8e8;
   color: var(--menu-color);
@@ -336,12 +344,14 @@ hr {
 }
 
 .home-image {
-  background-image: url('../images/canva.jpg');
+  background-image: url('./intelli.jpg');
 }
 
 .home h1,
 p {
-  font-family: "Protest Riot", sans-serif;
+  /* font-family: "Protest Riot", sans-serif; */
+  max-width: 600px;
+  text-align: center;
 }
 
 .Explore {
@@ -361,6 +371,22 @@ p {
 .Explore:hover {
   background-color: var(--hover-color);
   transition: 0.9s;
+}
+
+.aboutcontent {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.aboutcontent p {
+  text-align: left;
+  color: var(--text-color);
+  padding: 0 1rem 0 1rem;
+}
+.aboutcontent h4 {
+  text-align: left;
+  color: var(--text-color);
+  padding: 0 1rem 0 1rem;
 }
 
 .swiper-container {
@@ -442,7 +468,7 @@ a.button {
   max-width: 25rem;
   color: var(--text-color);
   place-items: center;
-  
+
 }
 
 .login-tem {
@@ -579,7 +605,7 @@ option {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  border: 1px solid var(--button-color);
+  border: 1px solid var(--box-shadow-day-night);
 }
 
 .content {

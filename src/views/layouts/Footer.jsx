@@ -43,7 +43,9 @@ const Footer = () => {
           <div className="info-social">
             <div className="info">
               <p>
-                Copyright &copy; {new Date().getFullYear()} All Rights Reserved by
+                {/* Copyright &copy; {new Date().getFullYear()} All Rights Reserved by
+              <a href="#"> Intelli.code</a>. */}
+               Copyright &copy; {new Date().getFullYear()}
                 <a href="#"> Intelli.code</a>.
               </p>
             </div>

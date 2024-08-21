@@ -28,7 +28,7 @@ app.use(limiter);
 
 // Routes
 app.use('/api/auth', authRoutes);
-// app.use('/api', protectedRoutes); 
+app.use('/api', protectedRoutes);  
 
 // Connect to MongoDB
 connectDB();

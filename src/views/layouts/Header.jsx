@@ -33,7 +33,7 @@ const Header = () => {
         </ul>
       </div>
       <div className="user">
-        <NavLink to="/login" onClick={closeMenu}><FontAwesomeIcon icon={faUser} /> <span className='user-text-login'>Log in</span></NavLink>
+        <NavLink to="/pricing" onClick={closeMenu}><FontAwesomeIcon icon={faIndianRupeeSign} /> <span className='user-text-login'> Pricing</span></NavLink>
       </div>
     </div>
   );

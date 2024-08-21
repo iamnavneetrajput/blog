@@ -126,6 +126,12 @@
 
 }
 
+@media (max-width: 575px){
+  .sub-line span {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 320px) {
   .nav-text {
     display: none;
@@ -141,6 +147,8 @@
   .article {
     flex-direction: column;
     align-items: flex-start;
+    padding: 1rem;
+
   }
 
   .image img {
@@ -183,4 +191,8 @@
   }
 
 }
-
+@media (max-width: 295px){
+  .back-to-top {
+    bottom: 74px;
+  }
+}

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
+import OAuth from '../partials/OAuth';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -123,7 +124,7 @@ const Register = () => {
               {step === 1 && (
                 <>
                   <p>Or Register with</p>
-                  <button type="button"><FontAwesomeIcon icon={faGoogle} /> Google</button>
+                  <OAuth/>
                   <button type="button"><FontAwesomeIcon icon={faFacebook} /> Facebook</button>
                 </>
               )}
