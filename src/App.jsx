@@ -6,11 +6,13 @@ import Header from './views/layouts/Header'
 import Submenu from './views/partials/Submenu';
 import Home from './views/layouts/Home';
 import About from './views/layouts/About';
+import Blog from './views/layouts/Blog';
 import Contact from './views/layouts/Contact'
 import Register from './views/layouts/Signup';
 import Login from './views/layouts/Login'
 import Footer from './views/layouts/Footer';
-
+import Dashboard from './pages/Dashboard';
+import OAuth from './views/partials/OAuth';
  //css file for styling
 import './assets/style/style.css' 
 import './assets/style/media.css' 
@@ -42,11 +44,13 @@ const App = () => {
         <Submenu isNightMode={theme === 'dark'} onToggle={toggleTheme} />
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/blog" element={<Blog />} /> */}
+          <Route path="/blog" element={<Blog />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/oauth" element={<OAuth />} />
           {/* <Route path="*" element={<NotFoundPage />} /> */}
         </Routes>
         <Footer />

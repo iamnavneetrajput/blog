@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
-import OAuth from '../partials/OAuth';
+import OAuth from '../partials/OAuth'; // Ensure the path is correct
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation(); // Get the current location
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -26,7 +27,7 @@ const Login = () => {
     setMessage('');
 
     try {
-      const response = await fetch('http://localhost:9000/api/auth/login', {
+      const response = await fetch('http://192.168.165.146:5000/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -41,9 +42,10 @@ const Login = () => {
         // Save token to cookies
         Cookies.set('token', data.token, { expires: 30 });
 
-        // Redirect to home page
+        // Redirect to previous page or home page
+        const from = location.state?.from?.pathname || '/';
         setTimeout(() => {
-          navigate('/');
+          navigate(from, { replace: true });
         }, 1000); // Adjust the delay if needed
       } else {
         setMessage(data.msg);
@@ -79,15 +81,19 @@ const Login = () => {
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </span>
               </div>
-              {message && <div className="message">{message}</div>}
               <button type="submit" disabled={loading}>
-                {loading ? 'Processing...' : 'Login'}
+                {loading ? (
+                  <div className="spinner"></div>
+                ) : message ? (
+                  message
+                ) : (
+                  'Login'
+                )}
               </button>
 
               <p>Or Login with</p>
-              <OAuth/>
+              <OAuth />
               <button type="button"><FontAwesomeIcon icon={faFacebook} /> Facebook</button>
-
               <p>Don't have an account? <span className='account'><Link className='account' to='/register'>Register.</Link></span></p>
             </form>
           </div>

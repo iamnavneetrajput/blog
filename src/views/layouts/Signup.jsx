@@ -27,10 +27,10 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    
+
     if (step === 1) {
       try {
-        const response = await fetch('http://localhost:9000/api/auth/register', {
+        const response = await fetch('http://localhost:5000/api/auth/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -117,14 +117,21 @@ const Register = () => {
                   <input type="text" placeholder="Enter OTP" name="otp" value={otp} onChange={onChange} required />
                 </>
               )}
-              {message && <div className="message">{message}</div>}
               <button type="submit" disabled={loading}>
-                {loading ? 'Processing...' : (step === 1 ? 'Register' : 'Verify OTP')}
+                {loading ? (
+                  <div className="spinner"></div>
+                ) : message ? (
+                  message
+                ) : step === 1 ? (
+                  'Register'
+                ) : (
+                  'Verify OTP'
+                )}
               </button>
               {step === 1 && (
                 <>
                   <p>Or Register with</p>
-                  <OAuth/>
+                  <OAuth />
                   <button type="button"><FontAwesomeIcon icon={faFacebook} /> Facebook</button>
                 </>
               )}

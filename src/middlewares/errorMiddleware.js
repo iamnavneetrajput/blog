@@ -1,8 +1,5 @@
-// errorMiddleware.js
-
-const errorMiddleware = (err, req, res, next) => {
+export const errorHandler = (err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send('Something broke!');
-};
-
-export default errorMiddleware;
+    res.status(500).json({ msg: 'Something went wrong', error: err.message });
+  };
+  

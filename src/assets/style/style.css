@@ -139,7 +139,8 @@ a.active {
   align-items: center;
 }
 
-.sub-line a {
+.sub-line a,
+.sub-line button {
   color: #e8e8e8;
   text-decoration: none;
   display: flex;
@@ -150,13 +151,25 @@ a.active {
   text-decoration: underline;
 }
 
-.sub-line a:hover {
+.sub-line a:hover,
+.sub-line button:hover  {
   text-decoration: underline;
 }
 
-.sub-line svg {
+.sub-line svg,
+.sub-line button svg {
   margin-right: 5px;
   font-size: 20px;
+}
+
+.sub-line button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: "Protest Riot", sans-serif;
 }
 
 
@@ -373,22 +386,6 @@ p {
   transition: 0.9s;
 }
 
-.aboutcontent {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.aboutcontent p {
-  text-align: left;
-  color: var(--text-color);
-  padding: 0 1rem 0 1rem;
-}
-.aboutcontent h4 {
-  text-align: left;
-  color: var(--text-color);
-  padding: 0 1rem 0 1rem;
-}
-
 .swiper-container {
   width: 100%;
   background-color: var(--background);
@@ -471,6 +468,28 @@ a.button {
 
 }
 
+/* Add this CSS to your stylesheet */
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin: auto;
+  border-left-color: var(--text-color);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
 .login-tem {
   padding: 20px;
   border-radius: 5px;
@@ -493,6 +512,7 @@ a.button {
   border: 1px solid var(--auth-color);
   box-sizing: border-box;
   background-color: transparent;
+  color: var(--text-color);
 }
 
 .password-field {

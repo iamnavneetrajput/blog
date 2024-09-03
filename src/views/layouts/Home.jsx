@@ -2,47 +2,8 @@ import React from 'react';
 import PageHeader from '../partials/PageHeader';
 import CategoriesComponent from '../partials/CategoriesComponent';
 import RecentArticles from '../partials/Articles';
+import HomeCategories from './Data'
 
-const homeCategories = [
-    // Your home page specific categories data
-    {
-        id: 1,
-        name: 'Home Category 1',
-        description: 'Description for home category 1.',
-        path: '/home-category-1',
-       
-    },
-
-    {
-        id: 2,
-        name: 'Home Category 1',
-        description: 'Description for home category 1.',
-        path: '/home-category-1',
-       
-    },
-    {
-        id: 3,
-        name: 'Home Category 1',
-        description: 'Description for home category 1.',
-        path: '/home-category-1',
-       
-    },
-    {
-        id: 4,
-        name: 'Home Category 1',
-        description: 'Description for home category 1.',
-        path: '/home-category-1',
-       
-    },
-    {
-        id: 5,
-        name: 'Home Category 1',
-        description: 'Description for home category 1.',
-        path: '/home-category-1',
-       
-    },
-    // Add more categories specific to Home
-];
 
 function Home() {
     return (
@@ -54,7 +15,7 @@ function Home() {
                 buttonLink="/course"
                 className="home-image"
             />
-            <CategoriesComponent categories={homeCategories} buttonText="Learn More"  />
+            <CategoriesComponent categories={HomeCategories} buttonText="Learn More"  />
             <RecentArticles/>
         </div>
     );

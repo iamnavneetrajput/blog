@@ -1,29 +1,44 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { AiOutlineLogin, AiOutlineUserAdd, AiOutlineLogout, AiOutlineSetting } from "react-icons/ai";
-import { LuLayoutDashboard, LuUser } from "react-icons/lu";
+import React from 'react';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { AiOutlineLogin, AiOutlineUserAdd, AiOutlineLogout, AiOutlineSetting } from 'react-icons/ai';
+import { LuLayoutDashboard, LuUser } from 'react-icons/lu';
+import Cookies from 'js-cookie';
 
 const Sublinlk = () => {
+    const location = useLocation();
+
+    // const navigate = useNavigate();
+
+    const handleLogout = () => {
+        Cookies.remove('token');
+        Cookies.remove('userName');
+        Cookies.remove('userEmail');
+        window.location.reload();
+    };
+
+    const isLoggedIn = !!Cookies.get('token');
+
     return (
         <>
-            <div className="sub-line">
-                <ul>
-                    <li><NavLink to="/login"><AiOutlineLogin /> Log in</NavLink></li>
-                    <li><NavLink to="/register"><AiOutlineUserAdd /> Sign up</NavLink></li>
-                </ul>
-            </div>
-
-
-            {/* <div className="sub-line">
-                <ul>
-                    <li><NavLink to="/login" title="Dashboard"><LuLayoutDashboard /> <span>Dashboard</span></NavLink></li>
-                    <li><NavLink to="/register" title="Account"><LuUser /> <span>Account</span></NavLink></li>
-                    <li><NavLink to="/register" title="Setting"><AiOutlineSetting /> <span>Setting</span></NavLink></li>
-                    <li><NavLink to="/register" title="Logout"><AiOutlineLogout /> <span>Logout</span></NavLink></li>
-                </ul>
-            </div> */}
+            {isLoggedIn ? (
+                <div className="sub-line">
+                    <ul>
+                        <li><NavLink to="/dashboard" title="Dashboard"><LuLayoutDashboard /> <span>Dashboard</span></NavLink></li>
+                        <li><NavLink to="/account" title="Account"><LuUser /> <span>Account</span></NavLink></li>
+                        <li><NavLink to="/settings" title="Settings"><AiOutlineSetting /> <span>Settings</span></NavLink></li>
+                        <li><button onClick={handleLogout} title="Logout"><AiOutlineLogout /> <span>Logout</span></button></li>
+                    </ul>
+                </div>
+            ) : (
+                <div className="sub-line">
+                    <ul>
+                        <li><NavLink to="/login" state={{ from: location }} ><AiOutlineLogin /> Log in</NavLink></li>
+                        <li><NavLink to="/register" state={{ from: location }} ><AiOutlineUserAdd /> Sign up</NavLink></li>
+                    </ul>
+                </div>
+            )}
         </>
-    )
-}
+    );
+};
 
-export default Sublinlk; 
+export default Sublinlk;
