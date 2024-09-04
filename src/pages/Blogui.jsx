@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import { ResizableBox } from 'react-resizable';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { AiOutlineSave } from "react-icons/ai";
 
 const BlogEditor = () => {
   const [title, setTitle] = useState('');
@@ -28,6 +29,15 @@ const BlogEditor = () => {
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+    // Live date and time
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setPublishedOn(new Date());
+      }, 1000);
+  
+      return () => clearInterval(timer);
+    }, []);
 
   // Handle adding image/video from URL
   const handleAddImageFromURL = () => {
@@ -244,7 +254,7 @@ const BlogEditor = () => {
           <p>Published on: {publishedOn.toLocaleString()}</p>
         </div>
         <div className="draft-section">
-          <button onClick={handleSaveDraft}>Save to Draft</button>
+          <button onClick={handleSaveDraft}><AiOutlineSave/></button>
         </div>
         <div className="publish-section">
           <button onClick={handlePublish}>Publish</button>

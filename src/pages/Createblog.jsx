@@ -1,11 +1,11 @@
 import React from 'react';
-import DragAndDropForm from './DragAndDropForm';
+import Blogui from './Blogui';
 
 const App = () => {
   return (
     <div className='main'>
       <h1>Blog Post Creator</h1>
-      <DragAndDropForm />
+      <Blogui />
     </div>
   );
 };
