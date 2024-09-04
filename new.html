@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container Layout */
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1400px;
+            gap: 20px;
+        }
+
+        /* Filter Bar at the Top */
+        .filter-bar {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .filter-group {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1em;
+            background-color: #ffffff;
+            color: #495057;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: #80bdff;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto;
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            font-size: 1.25em;
+            margin-bottom: 16px;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card ul {
+            list-style: none;
+            width: 100%;
+        }
+
+        .card li {
+            background: #f1f3f5;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+            word-break: break-word;
+        }
+
+        .card li:hover {
+            background-color: #e9ecef;
+        }
+
+        .delete-button {
+            background-color: #e74c3c;
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s ease;
+        }
+
+        .delete-button:hover {
+            background-color: #c0392b;
+        }
+
+        /* User Profile Specific Styles */
+        .div1 {
+            align-items: center;
+            text-align: center;
+        }
+
+        .div1 img {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 15px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .div1 h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .div1 p {
+            font-size: 1em;
+            color: #6c757d;
+        }
+
+        /* Grid Area Assignments */
+        .div1 {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+
+        .div2 {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+
+        .div3 {
+            grid-column: span 2;
+            grid-row: span 4;
+        }
+
+        .div4 {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+
+        .div5 {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+
+        .div6 {
+            grid-column: span 1;
+            grid-row: span 3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .div3 {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .filter-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                width: 100%;
+            }
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Grid Layout with Filter</title>
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrZj/k7ujTTXABcm6UgUO6ruUYzVigp3V3Vd8XBSBRyZPwHRUl2DgK2DgO2RxFy+dp6Cq5ABePV+9xDCsA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container">
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-group">
+                <label for="filter-category">Select Category:</label>
+                <select id="filter-category">
+                    <option value="">-- Select --</option>
+                    <option value="saved-articles">Saved Articles</option>
+                    <option value="comments-replies">Comments & Replies</option>
+                    <option value="liked-posts">Liked Posts</option>
+                    <option value="unfinished-reading">Unfinished Reading</option>
+                    <option value="notifications-updates">Notifications/Updates</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-input">Search:</label>
+                <input type="text" id="filter-input" placeholder="Type to search..." disabled>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <main class="content-grid">
+            <!-- User Profile -->
+            <div class="div1 card">
+                <img src="user-image.jpg" alt="User Image">
+                <h3>User Name</h3>
+                <p>Short bio or introduction text goes here.</p>
+            </div>
+
+            <!-- Saved Articles -->
+            <div class="div2 card" data-category="saved-articles">
+                <h3><i class="fas fa-bookmark"></i> Saved Articles</h3>
+                <ul>
+                    <li>How to Learn JavaScript Efficiently <button class="delete-button">Delete</button></li>
+                    <li>Understanding CSS Grid Layout <button class="delete-button">Delete</button></li>
+                    <li>Mastering React in 30 Days <button class="delete-button">Delete</button></li>
+                </ul>
+            </div>
+
+            <!-- Comments and Replies -->
+            <div class="div3 card" data-category="comments-replies">
+                <h3><i class="fas fa-comments"></i> Your Comments & Replies</h3>
+                <ul>
+                    <li>Great article on web accessibility!</li>
+                    <li>Reply to John: I totally agree with your point.</li>
+                    <li>Thanks for sharing these resources.</li>
+                </ul>
+            </div>
+
+            <!-- Liked Posts -->
+            <div class="div4 card" data-category="liked-posts">
+                <h3><i class="fas fa-thumbs-up"></i> Liked Posts</h3>
+                <ul>
+                    <li>Advanced Node.js Performance Tuning</li>
+                    <li>Why You Should Learn TypeScript</li>
+                </ul>
+            </div>
+
+            <!-- Unfinished Reading -->
+            <div class="div5 card" data-category="unfinished-reading">
+                <h3><i class="fas fa-book-open"></i> Unfinished Reading</h3>
+                <ul>
+                    <li>The Complete Guide to Flexbox</li>
+                    <li>JavaScript ES2021 Features</li>
+                </ul>
+            </div>
+
+            <!-- Suggestions -->
+            <div class="div6 card" data-category="notifications-updates">
+                <h3><i class="fas fa-lightbulb"></i> Notifications/Updates</h3>
+                <ul>
+                    <li>Latest update: New comment on your post</li>
+                    <li>Reminder: Finish reading the Flexbox guide</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

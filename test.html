@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* Reset some default browser styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        /* Filter Sidebar */
+        .filter-sidebar {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            width: 250px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .filter-sidebar h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #495057;
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1em;
+            background-color: #ffffff;
+            color: #495057;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: #80bdff;
+        }
+
+
+        .parent {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto 2fr repeat(3, 1fr);
+            gap: 16px;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .parent div {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .parent div:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .div1 img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .div1 h3 {
+            font-size: 1.5em;
+            margin-bottom: 8px;
+        }
+
+        .div1 p {
+            font-size: 1em;
+            color: #6c757d;
+        }
+
+        .parent h3 {
+            font-size: 1.25em;
+            margin-bottom: 16px;
+            color: #495057;
+            border-bottom: 2px solid #f8f9fa;
+            padding-bottom: 8px;
+            width: 100%;
+        }
+
+        .parent ul {
+            list-style: none;
+            width: 100%;
+        }
+
+        .parent li {
+            background: #e9ecef;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .parent li:hover {
+            background-color: #dee2e6;
+        }
+
+        .delete-button {
+            background-color: #e74c3c;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s ease;
+        }
+
+        .delete-button:hover {
+            background-color: #c0392b;
+        }
+
+        .div0 { grid-area: 1 / 1 / 2 / 5; }
+        .div1 { grid-area: 2 / 1 / 4 / 2; }
+        .div2 { grid-area: 2 / 2 / 4 / 3; }
+        .div3 { grid-area: 2 / 3 / 6 / 4; }
+        .div4 { grid-area: 2 / 4 / 3 / 5; }
+        .div5 { grid-area: 4 / 1 / 6 / 3; }
+        .div6 { grid-area: 3 / 4 / 6 / 5; }
+
+        /* Media Query for Tablets */
+        @media (max-width: 900px) {
+            .parent {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(7, auto);
+            }
+
+            .div0 { grid-area: 1 / 1 / 2 / 3; }
+            .div1 { grid-area: 2 / 1 / 3 / 3; }
+            .div2 { grid-area: 3 / 1 / 4 / 2; }
+            .div3 { grid-area: 3 / 2 / 5 / 3; }
+            .div4 { grid-area: 4 / 1 / 5 / 2; }
+            .div5 { grid-area: 5 / 1 / 6 / 3; }
+            .div6 { grid-area: 6 / 1 / 7 / 3; }
+        }
+
+        /* Media Query for Mobile Devices */
+        @media (max-width: 480px) {
+            .parent {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(7, auto);
+            }
+
+            .div0, .div1, .div2, .div3, .div4, .div5, .div6 {
+                grid-area: auto;
+            }
+
+            .parent div {
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Grid Layout</title>
+</head>
+<body>
+    <div class="parent">
+
+        <!-- User Profile -->
+        <div class="div1">
+            <img src="user-image.jpg" alt="User Image">
+            <h3>User Name</h3>
+            <p>Short bio or introduction text goes here.</p>
+        </div>
+        
+        <!-- Saved Articles -->
+        <div class="div2 card" data-category="saved-articles">
+            <h3>Saved Articles</h3>
+            <ul>
+                <li>Article 1 <button class="delete-button">Delete</button></li>
+                <li>Article 2 <button class="delete-button">Delete</button></li>
+                <li>Article 3 <button class="delete-button">Delete</button></li>
+            </ul>
+        </div>
+        
+        <!-- Comments and Replies -->
+        <div class="div3 card" data-category="comments-replies">
+            <h3>Your Comments & Replies</h3>
+            <ul>
+                <li>Comment 1</li>
+                <li>Reply to Comment 2</li>
+                <li>Comment 3</li>
+            </ul>
+        </div>
+        
+        <!-- Liked Posts -->
+        <div class="div4 card" data-category="liked-posts">
+            <h3>Liked Posts</h3>
+            <ul>
+                <li>Post 1</li>
+                <li>Post 2</li>
+                <li>Post 3</li>
+            </ul>
+        </div>
+        
+        <!-- Unfinished Reading Posts -->
+        <div class="div5 card" data-category="unfinished-reading">
+            <h3>Unfinished Reading</h3>
+            <ul>
+                <li>Post 1</li>
+                <li>Post 2</li>
+                <li>Post 3</li>
+            </ul>
+        </div>
+        
+        <!-- Notifications/Updates -->
+        <div class="div6 card" data-category="notifications-updates">
+            <h3>Notifications/Updates</h3>
+            <ul>
+                <li>Update 1: New comment on your post.</li>
+                <li>Update 2: Your article was liked by User X.</li>
+                <li>Notification 3: You have a new follower.</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        // Select DOM Elements
+        const filterCategory = document.getElementById('filter-category');
+        const filterInput = document.getElementById('filter-input');
+        const contentCards = document.querySelectorAll('.card[data-category]');
+
+        // Enable filter input when a category is selected
+        filterCategory.addEventListener('change', () => {
+            filterInput.value = '';
+            if (filterCategory.value) {
+                filterInput.disabled = false;
+                applyFilter();
+            } else {
+                filterInput.disabled = true;
+                resetFilters();
+            }
+        });
+
+        // Apply filter on input
+        filterInput.addEventListener('input', applyFilter);
+
+        function applyFilter() {
+            const category = filterCategory.value;
+            const query = filterInput.value.toLowerCase();
+
+            contentCards.forEach(card => {
+                if (card.dataset.category === category) {
+                    card.style.display = 'block';
+                    const items = card.querySelectorAll('li');
+                    let hasVisibleItems = false;
+
+                    items.forEach(item => {
+                        if (item.textContent.toLowerCase().includes(query)) {
+                            item.style.display = 'flex';
+                            hasVisibleItems = true;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    // If no items match the query, hide the entire card
+                    card.style.display = hasVisibleItems ? 'block' : 'none';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Always show the user profile card
+            document.querySelector('.div1').style.display = 'flex';
+        }
+
+        function resetFilters() {
+            contentCards.forEach(card => {
+                card.style.display = 'block';
+                const items = card.querySelectorAll('li');
+                items.forEach(item => {
+                    item.style.display = 'flex';
+                });
+            });
+        }
+
+    </script>
+</body>
+</html>

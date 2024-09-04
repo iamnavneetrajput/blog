@@ -1,0 +1,58 @@
+<style>
+            /* Filter Bar at the Top */
+            .filter-bar {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .filter-component{
+            width: 100%;
+            max-width: 10px;
+        }
+
+        .filter-group {
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .filter-component select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1em;
+            background-color: #ffffff;
+            color: #495057;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .filter-component select:focus,
+        .filter-group input:focus {
+            border-color: #80bdff;
+        }
+
+</style>
+<div class="filter-bar">
+    <div class="filter-component">
+        <select id="filter-category">
+            <option value="">-- Select --</option>
+            <option value="saved-articles">Saved Articles</option>
+            <option value="comments-replies">Comments & Replies</option>
+            <option value="liked-posts">Liked Posts</option>
+            <option value="unfinished-reading">Unfinished Reading</option>
+            <option value="notifications-updates">Notifications/Updates</option>
+        </select>
+    </div>
+    <div class="filter-group">
+        <input type="text" id="filter-input" placeholder="Type to search..." disabled>
+    </div>
+</div>

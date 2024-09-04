@@ -1,5 +1,6 @@
 :root {
   --background: #ffffff;
+  --dashboard-color:hwb(0 18% 82% / 0.919);
   --text-color: #1e1e1e;
   --shadow-color: rgba(0, 0, 0, 0.61);
   --menu-color: #272727;
@@ -18,6 +19,7 @@
 
 [data-theme='dark'] {
   --background: #1e1e1e;
+  --dashboard-color:hwb(0 31% 69% / 0.919);
   --text-color: #ffffffc1;
   --button-color--form: #253745;
   --button-color: #ff0;

@@ -18,9 +18,15 @@ const OAuth = () => {
 
     try {
       const result = await signInWithPopup(auth, provider);
-      // The signed-in user info
       const user = result.user;
       console.log('User Info:', user);
+
+      // Save user info to local storage
+      localStorage.setItem('user', JSON.stringify({
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL
+      }));
 
       // Save user token to cookies
       Cookies.set('token', user.accessToken, { expires: 30 });
@@ -49,9 +55,9 @@ const OAuth = () => {
 
   return (
     <div>
-      <button 
-        type="button" 
-        onClick={handleSignIn} 
+      <button
+        type="button"
+        onClick={handleSignIn}
         disabled={loading}
         className="oauth-button"
       >

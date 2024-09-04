@@ -1,71 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
+import UserProfile from './UserProfile'
+import SavedArticles from './SavedArticles'
+import Comments from './Comments'
+import LikedPost from './LikedPost'
+import UnfinishedReading from './UnfinishedReading'
+import Updates from './Updates'
 
-const Dashboard = () => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          // If no token is found, redirect to login
-          navigate('/login');
-          return;
-        }
-
-        const response = await fetch('http://localhost:5000/api/user/profile', {
-          method: 'GET',
-          headers: {
-            'x-auth-token': token
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch user data');
-        }
-
-        const data = await response.json();
-        setUser(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, [navigate]);
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
+function Dashboard() {
+  const user = JSON.parse(localStorage.getItem('user')) || {};
   return (
-    <div className="dashboard">
-      {user ? (
-        <>
-          <h1>Welcome, {user.name}!</h1>
-          <p>Email: {user.email}</p>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      ) : (
-        <p>No user data found</p>
-      )}
+    <div className='main'> 
+<div className="parent-wrap">
+    <div className="parent">
+      <UserProfile user={user}/>
+      <SavedArticles/>
+      <Comments/>
+      <LikedPost/>
+      <UnfinishedReading/>
+      <Updates/>
     </div>
-  );
-};
+    </div>
+    </div>
+  )
+}
 
 export default Dashboard;

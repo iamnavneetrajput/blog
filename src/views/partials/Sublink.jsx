@@ -10,11 +10,18 @@ const Sublinlk = () => {
     // const navigate = useNavigate();
 
     const handleLogout = () => {
+        // Remove user data from cookies
         Cookies.remove('token');
         Cookies.remove('userName');
         Cookies.remove('userEmail');
+    
+        // Remove user data from local storage
+        localStorage.removeItem('user');
+    
+        // Reload the page or redirect to login page
         window.location.reload();
     };
+    
 
     const isLoggedIn = !!Cookies.get('token');
 

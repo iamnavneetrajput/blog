@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container Layout */
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1400px;
+            gap: 20px;
+        }
+
+        /* Filter Sidebar */
+        .filter-sidebar {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            width: 250px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .filter-sidebar h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #495057;
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1em;
+            background-color: #ffffff;
+            color: #495057;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: #80bdff;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto;
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            font-size: 1.25em;
+            margin-bottom: 16px;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card ul {
+            list-style: none;
+            width: 100%;
+        }
+
+        .card li {
+            background: #f1f3f5;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+            word-break: break-word;
+        }
+
+        .card li:hover {
+            background-color: #e9ecef;
+        }
+
+        .delete-button {
+            background-color: #e74c3c;
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s ease;
+        }
+
+        .delete-button:hover {
+            background-color: #c0392b;
+        }
+
+        /* User Profile Specific Styles */
+        .div1 {
+            align-items: center;
+            text-align: center;
+        }
+
+        .div1 img {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 15px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .div1 h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .div1 p {
+            font-size: 1em;
+            color: #6c757d;
+        }
+
+        /* Grid Area Assignments */
+        .div1 {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+
+        .div2 {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+
+        .div3 {
+            grid-column: span 2;
+            grid-row: span 4;
+        }
+
+        .div4 {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+
+        .div5 {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+
+        .div6 {
+            grid-column: span 1;
+            grid-row: span 3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .div3 {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .filter-sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+                margin-bottom: 20px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                width: 100%;
+            }
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Grid Layout with Filter</title>
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrZj/k7ujTTXABcm6UgUO6ruUYzVigp3V3Vd8XBSBRyZPwHRUl2DgK2DgO2RxFy+dp6Cq5ABePV+9xDCsA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Include the CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Filter Sidebar -->
+        <aside class="filter-sidebar">
+            <h2>Filter Content</h2>
+            <div class="filter-group">
+                <label for="filter-category">Select Category:</label>
+                <select id="filter-category">
+                    <option value="">-- Select --</option>
+                    <option value="saved-articles">Saved Articles</option>
+                    <option value="comments-replies">Comments & Replies</option>
+                    <option value="liked-posts">Liked Posts</option>
+                    <option value="unfinished-reading">Unfinished Reading</option>
+                    <option value="notifications-updates">Notifications/Updates</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-input">Search:</label>
+                <input type="text" id="filter-input" placeholder="Type to search..." disabled>
+            </div>
+        </aside>
+
+        <!-- Main Content Grid -->
+        <main class="content-grid">
+            <!-- User Profile -->
+            <div class="div1 card">
+                <img src="user-image.jpg" alt="User Image">
+                <h3>User Name</h3>
+                <p>Short bio or introduction text goes here.</p>
+            </div>
+
+            <!-- Saved Articles -->
+            <div class="div2 card" data-category="saved-articles">
+                <h3><i class="fas fa-bookmark"></i> Saved Articles</h3>
+                <ul>
+                    <li>How to Learn JavaScript Efficiently <button class="delete-button">Delete</button></li>
+                    <li>Understanding CSS Grid Layout <button class="delete-button">Delete</button></li>
+                    <li>Mastering React in 30 Days <button class="delete-button">Delete</button></li>
+                </ul>
+            </div>
+
+            <!-- Comments and Replies -->
+            <div class="div3 card" data-category="comments-replies">
+                <h3><i class="fas fa-comments"></i> Your Comments & Replies</h3>
+                <ul>
+                    <li>Great article on web accessibility!</li>
+                    <li>Reply to John: I totally agree with your point.</li>
+                    <li>Thanks for sharing these resources.</li>
+                </ul>
+            </div>
+
+            <!-- Liked Posts -->
+            <div class="div4 card" data-category="liked-posts">
+                <h3><i class="fas fa-thumbs-up"></i> Liked Posts</h3>
+                <ul>
+                    <li>10 Tips for Effective Remote Work</li>
+                    <li>The Future of Artificial Intelligence</li>
+                    <li>Design Patterns in Modern Web Development</li>
+                </ul>
+            </div>
+
+            <!-- Unfinished Reading Posts -->
+            <div class="div5 card" data-category="unfinished-reading">
+                <h3><i class="fas fa-book-open"></i> Unfinished Reading</h3>
+                <ul>
+                    <li>Deep Dive into Node.js</li>
+                    <li>Exploring Functional Programming</li>
+                    <li>Building Scalable Applications with AWS</li>
+                </ul>
+            </div>
+
+            <!-- Notifications/Updates -->
+            <div class="div6 card" data-category="notifications-updates">
+                <h3><i class="fas fa-bell"></i> Notifications/Updates</h3>
+                <ul>
+                    <li>New comment on your post "Understanding Async/Await".</li>
+                    <li>Your article "Intro to Docker" was liked by Jane Doe.</li>
+                    <li>You have a new follower: Mike Smith.</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <!-- Include the JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        // Select DOM Elements
+        const filterCategory = document.getElementById('filter-category');
+        const filterInput = document.getElementById('filter-input');
+        const contentCards = document.querySelectorAll('.card[data-category]');
+
+        // Enable filter input when a category is selected
+        filterCategory.addEventListener('change', () => {
+            filterInput.value = '';
+            if (filterCategory.value) {
+                filterInput.disabled = false;
+                applyFilter();
+            } else {
+                filterInput.disabled = true;
+                resetFilters();
+            }
+        });
+
+        // Apply filter on input
+        filterInput.addEventListener('input', applyFilter);
+
+        function applyFilter() {
+            const category = filterCategory.value;
+            const query = filterInput.value.toLowerCase();
+
+            contentCards.forEach(card => {
+                if (card.dataset.category === category) {
+                    card.style.display = 'block';
+                    const items = card.querySelectorAll('li');
+                    let hasVisibleItems = false;
+
+                    items.forEach(item => {
+                        if (item.textContent.toLowerCase().includes(query)) {
+                            item.style.display = 'flex';
+                            hasVisibleItems = true;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    // If no items match the query, hide the entire card
+                    card.style.display = hasVisibleItems ? 'block' : 'none';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Always show the user profile card
+            document.querySelector('.div1').style.display = 'flex';
+        }
+
+        function resetFilters() {
+            contentCards.forEach(card => {
+                card.style.display = 'block';
+                const items = card.querySelectorAll('li');
+                items.forEach(item => {
+                    item.style.display = 'flex';
+                });
+            });
+        }
+
+    </script>
+</body>
+
+</html>
