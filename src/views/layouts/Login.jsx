@@ -1,33 +1,35 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
 import OAuth from '../partials/OAuth'; // Ensure the path is correct
 
 const Login = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current location
-  const [formData, setFormData] = useState({
+  const location = useLocation();
+  
+  const [state, setState] = useState({
     email: '',
-    password: ''
+    password: '',
+    message: '',
+    loading: false,
+    showPassword: false
   });
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
 
-  const { email, password } = formData;
+  const { email, password, message, loading, showPassword } = state;
 
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = e => setState(prevState => ({
+    ...prevState,
+    [e.target.name]: e.target.value
+  }));
 
   const onSubmit = async e => {
     e.preventDefault();
-    setLoading(true);
-    setMessage('');
+    setState(prevState => ({ ...prevState, loading: true, message: '' }));
 
     try {
-      const response = await fetch('http://192.168.165.146:5000/api/auth/login', {
+      const response = await fetch('http://192.168.193.146:5000/api/auth/login', { // Adjust the endpoint as needed
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -37,69 +39,74 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setMessage('Login successful');
+        setState(prevState => ({
+          ...prevState,
+          message: 'Login successful'
+        }));
 
-        // Save token to cookies
-        Cookies.set('token', data.token, { expires: 30 });
+        Cookies.set('token', data.token, { expires: 30, secure: true, sameSite: 'Strict' });
 
-        // Redirect to previous page or home page
         const from = location.state?.from?.pathname || '/';
         setTimeout(() => {
           navigate(from, { replace: true });
-        }, 1000); // Adjust the delay if needed
+        }, 1000);
       } else {
-        setMessage(data.msg);
+        setState(prevState => ({ ...prevState, message: data.msg }));
       }
     } catch (error) {
       console.error(error);
-      setMessage('Server error');
+      setState(prevState => ({ ...prevState, message: 'Server error' }));
     } finally {
-      setLoading(false);
-      setTimeout(() => setMessage(''), 3000); // Clear message after 3 seconds
+      setState(prevState => ({ ...prevState, loading: false }));
+      setTimeout(() => setState(prevState => ({ ...prevState, message: '' })), 3000);
     }
   };
 
   return (
-    <>
-      <div className="main">
-        <div className="login">
-          <div className="login-tem">
-            <h1>Login</h1>
-            <p>Welcome back! Enter your details to login to your account.</p>
-            <form onSubmit={onSubmit}>
-              <input type="email" placeholder="Email" name="email" value={email} onChange={onChange} required />
-              <div className="password-field">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={onChange}
-                  required
-                />
-                <span className='show-password' onClick={() => setShowPassword(!showPassword)}>
-                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                </span>
-              </div>
-              <button type="submit" disabled={loading}>
-                {loading ? (
-                  <div className="spinner"></div>
-                ) : message ? (
-                  message
-                ) : (
-                  'Login'
-                )}
-              </button>
+    <div className="main">
+      <div className="login">
+        <div className="login-tem">
+          <h1>Login</h1>
+          <p>Welcome back! Enter your details to login to your account.</p>
+          <form onSubmit={onSubmit}>
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              value={email}
+              onChange={onChange}
+              required
+            />
+            <div className="password-field">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                value={password}
+                onChange={onChange}
+                required
+              />
+              <span className='show-password' onClick={() => setState(prevState => ({ ...prevState, showPassword: !showPassword }))}>
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              </span>
+            </div>
+            <button type="submit" disabled={loading}>
+              {loading ? (
+                <div className="spinner"></div>
+              ) : message ? (
+                message
+              ) : (
+                'Login'
+              )}
+            </button>
 
-              <p>Or Login with</p>
-              <OAuth />
-              <button type="button"><FontAwesomeIcon icon={faFacebook} /> Facebook</button>
-              <p>Don't have an account? <span className='account'><Link className='account' to='/register'>Register.</Link></span></p>
-            </form>
-          </div>
+            <p>Or Login with</p>
+            <OAuth />
+            <p>Don't have an account? <span className='account'><Link className='account' to='/register'>Register.</Link></span></p>
+          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

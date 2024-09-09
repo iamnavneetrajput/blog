@@ -8,6 +8,7 @@
   --button-color--form: #3c6cdd;
   --button-color: rgb(0, 0, 0);
   --box-shadow-day-night: rgba(0, 0, 0, 0.61);
+  --admin-color: #f1f1f1;
 
   /* Sizing Collection */
 
@@ -19,6 +20,7 @@
 
 [data-theme='dark'] {
   --background: #1e1e1e;
+  --admin-color: #1e1e1e;
   --dashboard-color:hwb(0 31% 69% / 0.919);
   --text-color: #ffffffc1;
   --button-color--form: #253745;

@@ -1,0 +1,589 @@
+import React, { useState } from 'react';
+import { ImTextColor } from 'react-icons/im';
+import { FiBold, FiItalic, FiUnderline, FiImage, FiVideo, FiLink, FiCode, FiSave, FiEye, FiDelete, FiSend, FiSmile } from 'react-icons/fi';
+import { CiTextAlignCenter, CiTextAlignLeft, CiTextAlignRight } from 'react-icons/ci';
+import { MdFormatListBulleted, MdFormatListNumbered, MdFormatQuote, MdFormatLineSpacing } from 'react-icons/md';
+import PreviewModal from './PreviewPage'; // Import the PreviewModal component
+import EmojiPicker from './EmojiPicker'; // Import the EmojiPicker component
+
+const Toolbar = ({ editorRef }) => {
+  const [textInput, setTextInput] = useState('');
+  const [urlInput, setUrlInput] = useState('');
+  const [codeInput, setCodeInput] = useState('');
+  const [linkName, setLinkName] = useState('');
+  const [isAlignMenuOpen, setIsAlignMenuOpen] = useState(false);
+  const [isLinkMenuOpen, setIsLinkMenuOpen] = useState(false);
+  const [isImageMenuOpen, setIsImageMenuOpen] = useState(false);
+  const [isVideoMenuOpen, setIsVideoMenuOpen] = useState(false);
+  const [isEmojiMenuOpen, setIsEmojiMenuOpen] = useState(false);
+  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
+  const [isCodeMenuOpen, setIsCodeMenuOpen] = useState(false);
+  const [isFontMenuOpen, setIsFontMenuOpen] = useState(false);
+  const [isTextColorMenuOpen, setIsTextColorMenuOpen] = useState(false);
+  const [isBgColorMenuOpen, setIsBgColorMenuOpen] = useState(false);
+  const [isListMenuOpen, setIsListMenuOpen] = useState(false);
+  const [isQuoteMenuOpen, setIsQuoteMenuOpen] = useState(false);
+  const [isJumpBreakMenuOpen, setIsJumpBreakMenuOpen] = useState(false);
+  const [categories] = useState(['Technology', 'Lifestyle', 'Education', 'Entertainment']); // Example categories
+  const [selectedCategory, setSelectedCategory] = useState('Select Category');
+  const [alignment, setAlignment] = useState('Left');
+  const [previewMode, setPreviewMode] = useState(false);
+  const [fontType, setFontType] = useState('Arial');
+  const [textBgColor, setTextBgColor] = useState('#FFFFFF'); // Default background color
+
+  const handleTextFormatting = (command, value) => {
+    document.execCommand(command, false, value);
+  };
+
+  const handleAddMedia = (type) => {
+    if (urlInput.trim() === '') return;
+    const mediaHTML = `<${type} src="${urlInput}" />`;
+    const currentContent = editorRef.current.innerHTML;
+    editorRef.current.innerHTML = currentContent + mediaHTML;
+    setUrlInput('');
+    setIsImageMenuOpen(false);
+    setIsVideoMenuOpen(false);
+  };
+
+  const handleMediaUpload = (event, type) => {
+    const file = event.target.files[0];
+    if (file) {
+      const fileURL = URL.createObjectURL(file);
+      const mediaHTML = `<${type} src="${fileURL}" />`;
+      const currentContent = editorRef.current.innerHTML;
+      editorRef.current.innerHTML = currentContent + mediaHTML;
+    }
+    setIsImageMenuOpen(false);
+    setIsVideoMenuOpen(false);
+  };
+
+  const handleAddLink = () => {
+    if (urlInput.trim() === '' || linkName.trim() === '') return;
+    const linkHTML = `<a href="${urlInput}">${linkName}</a>`;
+    const currentContent = editorRef.current.innerHTML;
+    editorRef.current.innerHTML = currentContent + linkHTML;
+    setUrlInput('');
+    setLinkName('');
+    setIsLinkMenuOpen(false);
+  };
+
+  const handleAddCodeBlock = () => {
+    const codeHTML = `<pre><code>${codeInput}</code></pre>`;
+    const currentContent = editorRef.current.innerHTML;
+    editorRef.current.innerHTML = currentContent + codeHTML;
+    setCodeInput('');
+  };
+
+  const handleFontChange = (font) => {
+    setFontType(font);
+    document.execCommand('fontName', false, font);
+    setIsFontMenuOpen(false);
+  };
+
+  const handleBgColorChange = (color) => {
+    setTextBgColor(color);
+    document.execCommand('backColor', false, color);
+    setIsBgColorMenuOpen(false);
+  };
+
+  const handleList = (type) => {
+    handleTextFormatting(type === 'bullet' ? 'insertUnorderedList' : 'insertOrderedList');
+    setIsListMenuOpen(false);
+  };
+
+  const handleQuote = () => {
+    handleTextFormatting('formatBlock', '<blockquote>');
+    setIsQuoteMenuOpen(false);
+  };
+
+  const handleJumpBreak = () => {
+    document.execCommand('insertHTML', false, '<br><br>');
+    setIsJumpBreakMenuOpen(false);
+  };
+
+  const handleAlignment = (alignment) => {
+    handleTextFormatting('justify' + alignment);
+    setAlignment(alignment);
+    setIsAlignMenuOpen(false);
+  };
+
+  const handleSave = () => {
+    const content = editorRef.current.innerHTML;
+    localStorage.setItem('editorContent', content);
+    alert('Content saved!');
+  };
+
+  const handleClear = () => {
+    editorRef.current.innerHTML = '';
+  };
+
+  const handlePublish = () => {
+    const content = editorRef.current.innerHTML;
+    // Implement the publishing logic here, e.g., send content to a server
+    alert('Content published!');
+  };
+
+  const handleSelectEmoji = (emoji) => {
+    const emojiHTML = emoji;
+    const currentContent = editorRef.current.innerHTML;
+    editorRef.current.innerHTML = currentContent + emojiHTML;
+    setIsEmojiMenuOpen(false);
+  };
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    setIsCategoryMenuOpen(false);
+  };
+
+  return (
+    <div className="toolbar">
+      <button onClick={() => handleTextFormatting('bold')}><FiBold title="Bold" /></button>
+      <button onClick={() => handleTextFormatting('italic')}><FiItalic title="Italic" /></button>
+      <button onClick={() => handleTextFormatting('underline')}><FiUnderline title="Underline" /></button>
+      <button onClick={() => setIsTextColorMenuOpen(!isTextColorMenuOpen)}><ImTextColor title="Text Color" /></button>
+      {isTextColorMenuOpen && (
+        <div className="text-color-menu">
+          <input
+            type="color"
+            onChange={(e) => handleTextFormatting('foreColor', e.target.value)}
+          />
+        </div>
+      )}
+
+      {/* Font Type Dropdown */}
+      <div className="font-menu">
+        <button onClick={() => setIsFontMenuOpen(!isFontMenuOpen)}>
+          {fontType}
+        </button>
+        {isFontMenuOpen && (
+          <div className="font-options">
+            {['Arial', 'Courier New', 'Georgia', 'Times New Roman', 'Verdana'].map((font, index) => (
+              <button
+                key={index}
+                onClick={() => handleFontChange(font)}
+              >
+                {font}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Background Color Dropdown */}
+      <div className="bg-color-menu">
+        <button onClick={() => setIsBgColorMenuOpen(!isBgColorMenuOpen)}>
+          Background Color
+        </button>
+        {isBgColorMenuOpen && (
+          <div className="bg-color-options">
+            <input
+              type="color"
+              value={textBgColor}
+              onChange={(e) => handleBgColorChange(e.target.value)}
+            />
+          </div>
+        )}
+      </div>
+
+      <button onClick={() => setIsImageMenuOpen(!isImageMenuOpen)}><FiImage title="Image" /></button>
+      {isImageMenuOpen && (
+        <div className="image-menu">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleMediaUpload(e, 'img')}
+          />
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={urlInput}
+            onChange={(e) => setUrlInput(e.target.value)}
+          />
+          <button onClick={() => handleAddMedia('img')}>Add Image</button>
+        </div>
+      )}
+
+      <button onClick={() => setIsVideoMenuOpen(!isVideoMenuOpen)}><FiVideo title="Video" /></button>
+      {isVideoMenuOpen && (
+        <div className="video-menu">
+          <input
+            type="file"
+            accept="video/*"
+            onChange={(e) => handleMediaUpload(e, 'video')}
+          />
+          <input
+            type="text"
+            placeholder="Video URL"
+            value={urlInput}
+            onChange={(e) => setUrlInput(e.target.value)}
+          />
+          <button onClick={() => handleAddMedia('video')}>Add Video</button>
+        </div>
+      )}
+
+      <div className="link-menu">
+        <button onClick={() => setIsLinkMenuOpen(!isLinkMenuOpen)}><FiLink title="Link" /></button>
+        {isLinkMenuOpen && (
+          <div className="link-options">
+            <input
+              type="text"
+              placeholder="Link URL"
+              value={urlInput}
+              onChange={(e) => setUrlInput(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Link Text"
+              value={linkName}
+              onChange={(e) => setLinkName(e.target.value)}
+            />
+            <button onClick={handleAddLink}>Add Link</button>
+          </div>
+        )}
+      </div>
+
+      <button onClick={() => setIsCodeMenuOpen(!isCodeMenuOpen)}><FiCode title="Code" /></button>
+      {isCodeMenuOpen && (
+        <div className="code-menu">
+          <textarea
+            placeholder="Enter code here"
+            value={codeInput}
+            onChange={(e) => setCodeInput(e.target.value)}
+          />
+          <button onClick={handleAddCodeBlock}>Add Code Block</button>
+        </div>
+      )}
+
+      <div className="list-menu">
+        <button onClick={() => setIsListMenuOpen(!isListMenuOpen)}><MdFormatListBulleted title="Bullet List" /></button>
+        {isListMenuOpen && (
+          <div className="list-options">
+            <button onClick={() => handleList('bullet')}>Bullet List</button>
+            <button onClick={() => handleList('numbered')}>Numbered List</button>
+          </div>
+        )}
+      </div>
+
+      <div className="quote-menu">
+        <button onClick={() => setIsQuoteMenuOpen(!isQuoteMenuOpen)}><MdFormatQuote title="Quote" /></button>
+        {isQuoteMenuOpen && (
+          <div className="quote-options">
+            <button onClick={handleQuote}>Insert Quote</button>
+          </div>
+        )}
+      </div>
+
+      <div className="jump-break-menu">
+        <button onClick={() => setIsJumpBreakMenuOpen(!isJumpBreakMenuOpen)}><MdFormatLineSpacing title="Jump Break" /></button>
+        {isJumpBreakMenuOpen && (
+          <div className="jump-break-options">
+            <button onClick={handleJumpBreak}>Insert Jump Break</button>
+          </div>
+        )}
+      </div>
+
+      <button onClick={() => setIsEmojiMenuOpen(!isEmojiMenuOpen)}><FiSmile title="Emoji" /></button>
+      {isEmojiMenuOpen && (
+        <EmojiPicker
+          onSelectEmoji={handleSelectEmoji}
+          onClose={() => setIsEmojiMenuOpen(false)}
+        />
+      )}
+
+      <div className="category-menu">
+        <button onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}>
+          {selectedCategory}
+        </button>
+        {isCategoryMenuOpen && (
+          <div className="category-options">
+            {categories.map((category, index) => (
+              <button
+                key={index}
+                onClick={() => handleCategorySelect(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <button onClick={handleSave}><FiSave title="Save" /></button>
+      <button onClick={handleClear}><FiDelete title="Clear" /></button>
+      <button onClick={handlePublish}><FiSend title="Publish" /></button>
+      <button onClick={() => setPreviewMode(!previewMode)}><FiEye title="Preview" /></button>
+
+      {previewMode && (
+        <PreviewModal
+          content={editorRef.current.innerHTML}
+          onClose={() => setPreviewMode(false)}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Toolbar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState } from 'react';
+import { ImTextColor } from 'react-icons/im';
+import { FiBold, FiItalic, FiUnderline, FiImage, FiVideo, FiLink, FiCode, FiSave, FiEye, FiDelete, FiSend, FiSmile } from 'react-icons/fi';
+import { CiTextAlignCenter, CiTextAlignLeft, CiTextAlignRight, CiImageOn, CiVideoOn } from 'react-icons/ci';
+import PreviewModal from './PreviewPage'; // Import the PreviewModal component
+import EmojiPicker from './EmojiPicker'; // Import the EmojiPicker component
+
+const Toolbar = ({ editorRef }) => {
+  const [textInput, setTextInput] = useState('');
+  const [urlInput, setUrlInput] = useState('');
+  const [codeInput, setCodeInput] = useState('');
+  const [linkName, setLinkName] = useState('');
+  const [isAlignMenuOpen, setIsAlignMenuOpen] = useState(false);
+  const [isLinkMenuOpen, setIsLinkMenuOpen] = useState(false);
+  const [isImageMenuOpen, setIsImageMenuOpen] = useState(false);
+  const [isVideoMenuOpen, setIsVideoMenuOpen] = useState(false);
+  const [isEmojiMenuOpen, setIsEmojiMenuOpen] = useState(false);
+  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
+  const [isCodeMenuOpen, setIsCodeMenuOpen] = useState(false); // Ensure this state is defined
+  const [categories] = useState(['Technology', 'Lifestyle', 'Education', 'Entertainment']); // Example categories
+  const [selectedCategory, setSelectedCategory] = useState('Select Category');
+  const [alignment, setAlignment] = useState('Left');
+  const [previewMode, setPreviewMode] = useState(false);
+
+  const handleTextFormatting = (command, value) => {
+    document.execCommand(command, false, value);
+  };
+
+  const handleAddMedia = (type) => {
+    if (urlInput.trim() === '') return;
+    const mediaHTML = `<${type} src="${urlInput}" />`;
+    const currentContent = editorRef.current.innerHTML;
+    editorRef.current.innerHTML = currentContent + mediaHTML;
+    setUrlInput('');
+    setIsImageMenuOpen(false);
+    setIsVideoMenuOpen(false);
+  };
+
+  const handleMediaUpload = (event, type) => {
+    const file = event.target.files[0];
+    if (file) {
+      const fileURL = URL.createObjectURL(file);
+      const mediaHTML = `<${type} src="${fileURL}" />`;
+      const currentContent = editorRef.current.innerHTML;
+      editorRef.current.innerHTML = currentContent + mediaHTML;
+    }
+    setIsImageMenuOpen(false);
+    setIsVideoMenuOpen(false);
+  };
+
+  const handleAddLink = () => {
+    if (urlInput.trim() === '' || linkName.trim() === '') return;
+    const linkHTML = `<a href="${urlInput}">${linkName}</a>`;
+    const currentContent = editorRef.current.innerHTML;
+    editorRef.current.innerHTML = currentContent + linkHTML;
+    setUrlInput('');
+    setLinkName('');
+    setIsLinkMenuOpen(false);
+  };
+
+  const handleAddCodeBlock = () => {
+    const codeHTML = `<pre><code>${codeInput}</code></pre>`;
+    const currentContent = editorRef.current.innerHTML;
+    editorRef.current.innerHTML = currentContent + codeHTML;
+    setCodeInput('');
+  };
+
+  const handleAlignment = (alignment) => {
+    handleTextFormatting('justify' + alignment);
+    setAlignment(alignment);
+    setIsAlignMenuOpen(false);
+  };
+
+  const handleSave = () => {
+    const content = editorRef.current.innerHTML;
+    localStorage.setItem('editorContent', content);
+    alert('Content saved!');
+  };
+
+  const handleClear = () => {
+    editorRef.current.innerHTML = '';
+  };
+
+  const handlePublish = () => {
+    const content = editorRef.current.innerHTML;
+    // Implement the publishing logic here, e.g., send content to a server
+    alert('Content published!');
+  };
+
+  const handleSelectEmoji = (emoji) => {
+    const emojiHTML = emoji;
+    const currentContent = editorRef.current.innerHTML;
+    editorRef.current.innerHTML = currentContent + emojiHTML;
+    setIsEmojiMenuOpen(false);
+  };
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    setIsCategoryMenuOpen(false);
+  };
+
+  return (
+    <div className="toolbar">
+      <button onClick={() => handleTextFormatting('bold')}><FiBold title="Bold" /></button>
+      <button onClick={() => handleTextFormatting('italic')}><FiItalic title="Italic" /></button>
+      <button onClick={() => handleTextFormatting('underline')}><FiUnderline title="Underline" /></button>
+      <button onClick={() => handleTextFormatting('foreColor', 'red')}><ImTextColor title="Text Color" /></button>
+
+      {/* Emoji Picker */}
+      <div className="emoji-menu">
+        <button onClick={() => setIsEmojiMenuOpen(!isEmojiMenuOpen)}><FiSmile title="Emoji" /></button>
+        {isEmojiMenuOpen && (
+          <EmojiPicker
+            onSelectEmoji={handleSelectEmoji}
+            onClose={() => setIsEmojiMenuOpen(false)}
+          />
+        )}
+      </div>
+
+      {/* Category Dropdown */}
+      <div className="category-menu">
+        <button onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}>
+          {selectedCategory}
+        </button>
+        {isCategoryMenuOpen && (
+          <div className="category-options">
+            {categories.map((category, index) => (
+              <button
+                key={index}
+                onClick={() => handleCategorySelect(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Alignment Dropdown */}
+      <div className="alignment-menu">
+        <button onClick={() => setIsAlignMenuOpen(!isAlignMenuOpen)}><CiTextAlignCenter /></button>
+        {isAlignMenuOpen && (
+          <div className="alignment-options">
+            <button onClick={() => handleAlignment('Left')}><CiTextAlignLeft /></button>
+            <button onClick={() => handleAlignment('Center')}><CiTextAlignCenter /></button>
+            <button onClick={() => handleAlignment('Right')}><CiTextAlignRight /></button>
+          </div>
+        )}
+      </div>
+
+      {/* Link Dropdown */}
+      <div className="link-menu">
+        <button onClick={() => setIsLinkMenuOpen(!isLinkMenuOpen)}><FiLink /></button>
+        {isLinkMenuOpen && (
+          <div className="link-options">
+            <input
+              type="url"
+              value={urlInput}
+              onChange={(e) => setUrlInput(e.target.value)}
+              placeholder="Enter URL"
+            />
+            <input
+              type="text"
+              value={linkName}
+              onChange={(e) => setLinkName(e.target.value)}
+              placeholder="Link name"
+            />
+            <button onClick={handleAddLink}><FiLink /></button>
+          </div>
+        )}
+      </div>
+
+      {/* Image Dropdown */}
+      <div className="media-menu">
+        <button onClick={() => setIsImageMenuOpen(!isImageMenuOpen)}><FiImage /></button>
+        {isImageMenuOpen && (
+          <div className="media-options">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(event) => handleMediaUpload(event, 'img')}
+            />
+            <input
+              type="url"
+              value={urlInput}
+              onChange={(e) => setUrlInput(e.target.value)}
+              placeholder="Enter image URL"
+            />
+            <button onClick={() => handleAddMedia('img')}><CiImageOn /></button>
+          </div>
+        )}
+      </div>
+
+      {/* Video Dropdown */}
+      <div className="media-menu">
+        <button onClick={() => setIsVideoMenuOpen(!isVideoMenuOpen)}><FiVideo /></button>
+        {isVideoMenuOpen && (
+          <div className="media-options">
+            <input
+              type="file"
+              accept="video/*"
+              onChange={(event) => handleMediaUpload(event, 'video')}
+            />
+            <input
+              type="url"
+              value={urlInput}
+              onChange={(e) => setUrlInput(e.target.value)}
+              placeholder="Enter video URL"
+            />
+            <button onClick={() => handleAddMedia('video')}><CiVideoOn /></button>
+          </div>
+        )}
+      </div>
+
+      {/* Code Block Dropdown */}
+      <div className="code-menu">
+        <button onClick={() => setIsCodeMenuOpen(!isCodeMenuOpen)}><FiCode /></button>
+        {isCodeMenuOpen && (
+          <div className="code-options">
+            <textarea
+              value={codeInput}
+              onChange={(e) => setCodeInput(e.target.value)}
+              placeholder="Enter code"
+            />
+            <button onClick={handleAddCodeBlock}><FiCode /></button>
+          </div>
+        )}
+      </div>
+
+      {/* Save and Publish */}
+      <button onClick={handleSave}><FiSave title="Save" /></button>
+      <button onClick={handlePublish}><FiSend title="Publish" /></button>
+      <button onClick={handleClear}><FiDelete title="Clear" /></button>
+
+      {/* Preview */}
+      <button onClick={() => setPreviewMode(!previewMode)}>
+        {previewMode ? <FiEye title="Edit" /> : <FiEye title="Preview" />}
+      </button>
+      {previewMode && (
+        <PreviewModal content={editorRef.current.innerHTML} onClose={() => setPreviewMode(false)} />
+      )}
+    </div>
+  );
+};
+
+export default Toolbar;

@@ -1,6 +1,7 @@
 import express from 'express';
 import connectDB from '../config/db.js'; // Import the database connection module
 import authRoutes from './routes/authRoutes.js';
+import postRoutes from './routes/postRoutes.js'
 import protectedRoutes from './routes/protectedRoutes.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -28,7 +29,9 @@ app.use(limiter);
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api', protectedRoutes);  
+app.use('/api', protectedRoutes);
+app.use('/api', postRoutes);
+
 
 // Connect to MongoDB
 connectDB();
@@ -52,4 +55,3 @@ process.on('SIGTERM', shutdown);
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
- 

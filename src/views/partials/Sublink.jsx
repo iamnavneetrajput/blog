@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { AiOutlineLogin, AiOutlineUserAdd, AiOutlineLogout, AiOutlineSetting } from 'react-icons/ai';
 import { LuLayoutDashboard, LuUser } from 'react-icons/lu';
+import { RxDashboard } from "react-icons/rx";
 import Cookies from 'js-cookie';
 
 const Sublinlk = () => {
@@ -30,8 +31,8 @@ const Sublinlk = () => {
             {isLoggedIn ? (
                 <div className="sub-line">
                     <ul>
-                        <li><NavLink to="/dashboard" title="Dashboard"><LuLayoutDashboard /> <span>Dashboard</span></NavLink></li>
-                        <li><NavLink to="/account" title="Account"><LuUser /> <span>Account</span></NavLink></li>
+                    <li><NavLink to="/blogger" title="Dashboard"><RxDashboard /> <span>Post</span></NavLink></li>
+                        <li><NavLink to="/dashboard" title="Dashboard"><RxDashboard /> <span>Dashboard</span></NavLink></li>
                         <li><NavLink to="/settings" title="Settings"><AiOutlineSetting /> <span>Settings</span></NavLink></li>
                         <li><button onClick={handleLogout} title="Logout"><AiOutlineLogout /> <span>Logout</span></button></li>
                     </ul>

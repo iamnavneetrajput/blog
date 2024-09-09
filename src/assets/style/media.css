@@ -87,10 +87,11 @@
     background-color: transparent;
   }
 
-  input:checked+.slider:before {
+  input:checked + .slider:before {
     transform: translateX(0%);
-    box-shadow: inset 15px -4px 0px 15px #fff000;
+    box-shadow: inset 15px -4px 0px 15px rgba(255, 215, 0, 0.8); /* Sun color (Golden Yellow) */
   }
+  
 
   .mySwiper {
     width: 100%;
@@ -195,4 +196,140 @@
   .back-to-top {
     bottom: 74px;
   }
+}
+
+/* Unified modal container */
+.unified-modal {
+  background: var(--background);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+}
+
+/* Unified input styles */
+.unified-input {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Unified button styles */
+.unified-button {
+  padding: 10px;
+  border-radius: 4px;
+  background-color: var(--button-background);
+  color: var(--text-color);
+  border: none;
+  cursor: pointer;
+}
+
+.emoji-button {
+  margin: 5px;
+}
+
+/* Modal overlay styles (common for all modals) */
+.modal-overlay,
+.unified-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal container (common for all modals) */
+.modal-container {
+  background: var(--background);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%; /* Responsive modal width */
+  text-align: center;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Close button */
+.close-modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.close-modal svg {
+  color: red;
+  background-color: var(--text-color);
+  border: none;
+  padding: 2px;
+  border-radius: 6px;
+}
+
+/* Input fields (common for all modals) */
+.modal-input {
+  display: block;
+  margin: 10px 0; /* Vertical margin for spacing */
+  padding: 8px;
+  width: 100%; /* Full width input fields */
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Button group for actions (common for all modals) */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Common buttons styling */
+.modal-button {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  margin: 4px;
+  background-color: var(--button-color--form);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.modal-button svg{
+  margin-right: 4px;
+  font-size: 1.2em;
+  vertical-align: middle;
+}
+
+.submit-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.cancel-button {
+  background-color: red;
+  color: white;
+}
+
+/* Trigger button */
+.modal-trigger-button {
+  background: none;
+  border: none;
+  cursor: pointer;
 }

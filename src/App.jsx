@@ -12,7 +12,9 @@ import Register from './views/layouts/Signup';
 import Login from './views/layouts/Login'
 import Footer from './views/layouts/Footer';
 import Dashboard from './pages/Dashboard';
-import Createblog from './pages/Createblog'
+import MainEditorPage from './pages/Blogger/MainEditorPage';
+import PreviewPage from './pages/Blogger/PreviewPage';
+import PostsList from './pages/Blogger/PostsList';
 import OAuth from './views/partials/OAuth';
  //css file for styling
 import './assets/style/style.css' 
@@ -51,9 +53,10 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/createblog" element={<Createblog />} />
+          <Route path="/blogger" element={<MainEditorPage />} />
+          <Route path="/preview" element={<PreviewPage />} />
+          <Route path="/postsList" element={<PostsList />} />
           <Route path="/oauth" element={<OAuth />} />
-          {/* <Route path="*" element={<NotFoundPage />} /> */}
         </Routes>
         <Footer />
       </div>
