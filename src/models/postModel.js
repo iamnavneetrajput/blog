@@ -18,6 +18,11 @@ const postSchema = new mongoose.Schema({
     type: String,
     enum: ['published', 'draft', 'archived'],
     default: 'draft'
+  },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category', // Reference to the Category model
+    required: true
   }
 });
 

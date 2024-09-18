@@ -27,13 +27,13 @@ const CategoriesComponent = ({ categories, buttonText }) => {
                 onSlideChange={() => console.log('slide change')}
             >
                 {categories.map(category => (
-                    <SwiperSlide key={category.id}>
+                    <SwiperSlide key={category._id}>
                         <ContentCard
                             name={category.name}
                             description={category.description}
                             buttonText={buttonText}
-                            link={category.path}
-                            image={category.image}
+                            link={category.path || '#'} // Ensure link or path is handled
+                            image={category.image || ''} // Ensure image or placeholder
                         />
                     </SwiperSlide>
                 ))}

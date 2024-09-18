@@ -1,18 +1,16 @@
+// src/routes/postRoutes.js
 import express from 'express';
-import {
-    createPost,
-    getPosts,
-    getPostById,
-    updatePost,
-    deletePost
-} from '../controllers/postController.js';
+import { createPost, getPosts, getRecentArticles } from '../controllers/postController.js'; // Adjust import as needed
 
 const router = express.Router();
 
+// Route to create a new post
 router.post('/post', createPost);
+
+// Route to get all posts
 router.get('/posts', getPosts);
-router.get('/post/:id', getPostById);
-router.put('/post/:id', updatePost);
-router.delete('/post/:id', deletePost);
+
+// Route to get recent articles
+router.get('/recent-articles', getRecentArticles);
 
 export default router;

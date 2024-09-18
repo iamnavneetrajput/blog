@@ -29,7 +29,7 @@ const OAuth = () => {
       }));
 
       // Save user token to cookies
-      Cookies.set('token', user.accessToken, { expires: 30 });
+      Cookies.set('token', user.accessToken, { expires: 30, secure: true, sameSite: 'Strict' });
 
       // Redirect to the original page or home
       const redirectTo = location.state?.from?.pathname || '/';
@@ -60,6 +60,7 @@ const OAuth = () => {
         onClick={handleSignIn}
         disabled={loading}
         className="oauth-button"
+        aria-label="Sign in with Google"
       >
         {loading ? (
           <div className="spinner"></div>

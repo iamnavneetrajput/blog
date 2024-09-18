@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
-import { CiTextAlignCenter, CiTextAlignLeft, CiTextAlignRight, CiImageOn, CiVideoOn } from 'react-icons/ci';
 import FontSelector from './components/FontSelector';
 import TextFormattingButtons from './components/TextFormattingButtons';
+import { CiTextAlignCenter, CiTextAlignLeft, CiTextAlignRight } from 'react-icons/ci';
 import MediaUploader from './components/MediaUploader';
 import LinkAdder from './components/LinkAdder';
-import EmojiPicker from './EmojiPicker'; // Import the EmojiPicker component
-import { CloseIcon, SmileIcon, CodeIcon } from '../../assets/icons/Icon';
+import EmojiPicker from './EmojiPicker';
+import { SmileIcon, Bulletpoint, Numbering } from '../../assets/icons/Icon';
 import CodeBlockAdder from './components/CodeBlockAdder';
+import CategorySelector from './components/CategorySelector'; // Import the CategorySelector component
 
-const Toolbar = ({ editorRef }) => {
+const Toolbar = ({ editorRef, setCategory }) => {
   const [fontType, setFontType] = useState('Arial');
   const [fontSize, setFontSize] = useState('16px');
   const [urlInput, setUrlInput] = useState('');
-  const [codeInput, setCodeInput] = useState('');
   const [linkName, setLinkName] = useState('');
   const [isAlignMenuOpen, setIsAlignMenuOpen] = useState(false);
   const [isEmojiMenuOpen, setIsEmojiMenuOpen] = useState(false);
-  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
-  const [isCodeMenuOpen, setIsCodeMenuOpen] = useState(false);
-  const [categories] = useState(['Technology', 'Lifestyle', 'Education', 'Entertainment']); // Example categories
-  const [selectedCategory, setSelectedCategory] = useState('Select Category');
   const [selectedColor, setSelectedColor] = useState('#000000'); // Default color is black
 
   const handleTextFormatting = (command, value) => {
@@ -42,11 +38,6 @@ const Toolbar = ({ editorRef }) => {
     const currentContent = editorRef.current.innerHTML;
     editorRef.current.innerHTML = currentContent + emojiHTML;
     setIsEmojiMenuOpen(false);
-  };
-
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-    setIsCategoryMenuOpen(false);
   };
 
   return (
@@ -84,28 +75,12 @@ const Toolbar = ({ editorRef }) => {
         )}
       </div>
 
-      {/* Category Dropdown */}
-      <div className="category-menu">
-        <button onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}>
-          {selectedCategory}
-        </button>
-        {isCategoryMenuOpen && (
-          <div className="category-options">
-            {categories.map((category, index) => (
-              <button
-                key={index}
-                onClick={() => handleCategorySelect(category)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
+      {/* Category Selector */}
+      <CategorySelector setCategory={setCategory} /> {/* Include the category selector */}
 
       {/* Alignment Dropdown */}
       <div className="alignment-menu">
-        <button onClick={() => setIsAlignMenuOpen(!isAlignMenuOpen)}><CiTextAlignCenter /></button>
+        <button onClick={() => setIsAlignMenuOpen(!isAlignMenuOpen)}><CiTextAlignLeft /></button>
         {isAlignMenuOpen && (
           <div className="alignment-options">
             <button onClick={() => handleAlignment('Left')}><CiTextAlignLeft /></button>
@@ -113,6 +88,16 @@ const Toolbar = ({ editorRef }) => {
             <button onClick={() => handleAlignment('Right')}><CiTextAlignRight /></button>
           </div>
         )}
+      </div>
+
+      {/* Bullets and Numbering */}
+      <div className="toolbar-item">
+        <button onClick={() => handleTextFormatting('insertUnorderedList')}>
+          <Bulletpoint/>
+        </button>
+        <button onClick={() => handleTextFormatting('insertOrderedList')}>
+          <Numbering/>
+        </button>
       </div>
 
       <LinkAdder

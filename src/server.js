@@ -1,8 +1,9 @@
 import express from 'express';
 import connectDB from '../config/db.js'; // Import the database connection module
 import authRoutes from './routes/authRoutes.js';
-import postRoutes from './routes/postRoutes.js'
+import postRoutes from './routes/postRoutes.js';
 import protectedRoutes from './routes/protectedRoutes.js';
+import categoryRoutes from'./routes/categoryRoutes.js'
 import cors from 'cors';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
@@ -31,6 +32,7 @@ app.use(limiter);
 app.use('/api/auth', authRoutes);
 app.use('/api', protectedRoutes);
 app.use('/api', postRoutes);
+app.use('/api', categoryRoutes);
 
 
 // Connect to MongoDB

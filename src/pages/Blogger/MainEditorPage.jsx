@@ -7,6 +7,8 @@ import axios from 'axios';
 
 const MainEditorPage = () => {
   const [title, setTitle] = useState(''); // State for the post title
+  const [content, setContent] = useState(''); // State for the post content
+  const [selectedCategory, setSelectedCategory] = useState(''); // State for selected category
   const contentRef = useRef(null);  // Reference to the contenteditable div for content
   const titleRef = useRef(null);  // Reference to the contenteditable div for title
   const [previewMode, setPreviewMode] = useState(false); // Preview mode state
@@ -18,12 +20,23 @@ const MainEditorPage = () => {
     const content = contentRef.current.innerHTML; // Get HTML content from editor
     const titleText = titleRef.current.innerText; // Get title from title editor
 
+    if (!selectedCategory) {
+      console.error('Please select a category.');
+      showMessage('Please select a category.', 'error');
+      return;
+    }
+
     try {
-      await axios.post('http://192.168.193.146:5000/api/post', { title: titleText, content });
-      showMessage('Post saved successfully!', 'success'); // Display success message
+      const response = await axios.post('http://localhost:5000/api/post', {
+        title: titleText,
+        content,
+        categoryName: selectedCategory
+      });
+      console.log('Post saved:', response.data);
+      showMessage('Post published successfully!', 'success');
     } catch (error) {
-      console.error('Error saving post:', error);
-      showMessage('Failed to save post.', 'error'); // Display error message
+      console.error('Error saving post:', error.response?.data || error.message);
+      showMessage('Failed to publish post.', 'error');
     }
   };
 
@@ -51,10 +64,11 @@ const MainEditorPage = () => {
   const showMessage = (msg, type = 'success') => {
     setMessage(msg);
     setMessageType(type);
+    setTimeout(() => setMessage(''), 3000); // Auto-hide after 3 seconds
   };
 
   const clearMessage = () => {
-    setMessage(''); // Clear the message after 3 seconds
+    setMessage(''); // Clear the message
   };
 
   useEffect(() => {
@@ -80,15 +94,16 @@ const MainEditorPage = () => {
   return (
     <div className="main-editor-page main">
       {/* Toolbar for formatting and adding content */}
-      <Toolbar editorRef={contentRef} />
+      <Toolbar editorRef={contentRef} setCategory={setSelectedCategory} />
 
       {/* Title area with default text */}
+      <div className="editor">
       <div
         ref={titleRef}
         className="editor-title"
         contentEditable="true"
         style={{
-          border: '1px solid #ccc',
+          border: '2px solid var(--auth-color)',
           padding: '4px',
           marginTop: '20px',
           backgroundColor: 'var(--background)',
@@ -106,7 +121,7 @@ const MainEditorPage = () => {
         className="editor-content"
         contentEditable="true"
         style={{
-          border: '1px solid #ccc',
+          border: '2px solid var(--auth-color)',
           minHeight: '300px',
           padding: '10px',
           marginTop: '20px',
@@ -116,6 +131,7 @@ const MainEditorPage = () => {
         }}
         onInput={handleInput} // Handle input changes
       />
+      </div>
 
       {/* Notification display */}
       <Notification message={message} type={messageType} clearMessage={clearMessage} />
@@ -134,6 +150,8 @@ const MainEditorPage = () => {
 
         {/* Save */}
         <button onClick={handleSave} className='publish-btn'><FiSave title="Save" /> Save</button>
+
+        {/* Clear */}
         <button onClick={handleClear} className='publish-btn'><FiDelete title="Clear" /> Clear</button>
       </div>
     </div>

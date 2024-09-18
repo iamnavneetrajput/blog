@@ -11,8 +11,7 @@ const PostsList = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get('http://192.168.193.146:5000/api/posts');
-        // No need to format text here if content is already HTML formatted
-        setPosts(response.data);
+        setPosts(response.data); // Assuming response.data is an array of posts
       } catch (err) {
         setError('Failed to fetch posts');
         console.error('Error fetching posts:', err);

@@ -1,78 +1,59 @@
+// src/controllers/postController.js
+import Category from '../models/categoryModel.js';
 import Post from '../models/postModel.js';
 
 // Create a new post
 export const createPost = async (req, res) => {
-  const { title, content } = req.body;
   try {
-    const newPost = new Post({ title, content });
-    await newPost.save();
-    res.status(201).json({ message: 'Post saved successfully!' });
+    const { title, content, categoryName, status = 'draft' } = req.body;
+
+    // Find the category by name
+    const category = await Category.findOne({ name: categoryName });
+    if (!category) {
+      return res.status(400).json({ message: 'Category not found' });
+    }
+
+    // Create a new post
+    const newPost = new Post({
+      title,
+      content,
+      status,
+      category: category._id,
+    });
+
+    // Save the post
+    const savedPost = await newPost.save();
+    res.status(201).json(savedPost);
   } catch (error) {
-    console.error('Error saving post:', error);
-    res.status(500).json({ message: 'Failed to save post.' });
+    res.status(500).json({ message: error.message });
   }
 };
 
-// Fetch all posts
+// Get all posts
 export const getPosts = async (req, res) => {
   try {
-    const posts = await Post.find(); // Fetch all posts from the database
-    res.json(posts); // Send posts as JSON response
+    const posts = await Post.find().populate('category', 'name'); // Populate category to include the category name
+    res.status(200).json(posts);
   } catch (error) {
-    console.error('Error fetching posts:', error);
-    res.status(500).json({ message: 'Failed to fetch posts.' });
+    res.status(500).json({ message: error.message });
   }
 };
 
-// Fetch a post by ID
-export const getPostById = async (req, res) => {
-  const { id } = req.params;
+// Get the latest three articles
+export const getRecentArticles = async (req, res) => {
   try {
-    const post = await Post.findById(id);
-    if (post) {
-      res.json(post);
-    } else {
-      res.status(404).json({ message: 'Post not found' });
-    }
-  } catch (error) {
-    console.error('Error fetching post:', error);
-    res.status(500).json({ message: 'Failed to fetch post.' });
-  }
-};
+    // Fetch the latest three posts sorted by publish date
+    const posts = await Post.find()
+      .sort({ publishDate: -1 })
+      .limit(3)
+      .populate('category', 'name'); // Populate the category field to include the category name
 
-// Update a post by ID
-export const updatePost = async (req, res) => {
-  const { id } = req.params;
-  const { title, content } = req.body;
-  try {
-    const updatedPost = await Post.findByIdAndUpdate(
-      id,
-      { title, content },
-      { new: true }
-    );
-    if (updatedPost) {
-      res.json(updatedPost);
-    } else {
-      res.status(404).json({ message: 'Post not found' });
+    if (posts.length === 0) {
+      return res.status(200).json({ message: 'No posts available' });
     }
-  } catch (error) {
-    console.error('Error updating post:', error);
-    res.status(500).json({ message: 'Failed to update post.' });
-  }
-};
 
-// Delete a post by ID
-export const deletePost = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const deletedPost = await Post.findByIdAndDelete(id);
-    if (deletedPost) {
-      res.json({ message: 'Post deleted successfully!' });
-    } else {
-      res.status(404).json({ message: 'Post not found' });
-    }
+    res.status(200).json(posts);
   } catch (error) {
-    console.error('Error deleting post:', error);
-    res.status(500).json({ message: 'Failed to delete post.' });
+    res.status(500).json({ message: error.message });
   }
 };

@@ -3,6 +3,7 @@ import { ImTextColor } from 'react-icons/im';
 import { FiBold, FiItalic, FiUnderline, FiImage, FiVideo, FiLink, FiCode, FiSave, FiEye, FiDelete, FiSmile } from 'react-icons/fi';
 import { CiTextAlignCenter, CiTextAlignLeft, CiTextAlignRight, CiImageOn, CiVideoOn } from 'react-icons/ci';
 import { RiCloseFill } from 'react-icons/ri';
+import { MdFormatListBulleted, MdFormatListNumbered } from "react-icons/md";
 
 // Export all icons as reusable components
 export const CloseIcon = (props) => <RiCloseFill {...props} />;
@@ -21,6 +22,8 @@ export const SmileIcon = (props) => <FiSmile {...props} />;
 
 // Text alignment and media icons
 export const AlignCenterIcon = (props) => <CiTextAlignCenter {...props} />;
+export const Bulletpoint = (props) => <MdFormatListBulleted {...props} />;
+export const Numbering = (props) => <MdFormatListNumbered {...props} />;
 export const AlignLeftIcon = (props) => <CiTextAlignLeft {...props} />;
 export const AlignRightIcon = (props) => <CiTextAlignRight {...props} />;
 export const ImageOnIcon = (props) => <CiImageOn {...props} />;
