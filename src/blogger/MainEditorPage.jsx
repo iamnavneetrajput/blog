@@ -103,7 +103,7 @@ const MainEditorPage = () => {
         className="editor-title"
         contentEditable="true"
         style={{
-          border: '2px solid var(--auth-color)',
+          border: '1px solid var(--text-color)',
           padding: '4px',
           marginTop: '20px',
           backgroundColor: 'var(--background)',
@@ -121,8 +121,9 @@ const MainEditorPage = () => {
         className="editor-content"
         contentEditable="true"
         style={{
-          border: '2px solid var(--auth-color)',
-          minHeight: '300px',
+          border: '1px solid var(--text-color)',
+          color: 'var(--text-color)',
+          minHeight: '350px',
           padding: '10px',
           marginTop: '20px',
           backgroundColor: 'var(--background)',

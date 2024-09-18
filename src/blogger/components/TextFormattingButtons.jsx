@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiBold, FiItalic, FiUnderline } from 'react-icons/fi';
 import { ImTextColor } from 'react-icons/im';
-import { CloseIcon } from '../../../assets/icons/Icon'; // Ensure you have this icon
+import { CloseIcon } from '../../assets/icons/Icon'; // Ensure you have this icon
 
 const TextFormattingButtons = ({ handleTextFormatting, selectedColor, setSelectedColor }) => {
   const [showColorPicker, setShowColorPicker] = useState(false);

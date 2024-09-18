@@ -1,39 +1,26 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from './types';
+// src/redux/actions/authActions.js
+import { SET_USER, SET_MESSAGE } from './userActions';
 import Cookies from 'js-cookie';
 
-// Login action
-export const login = (email, password) => async dispatch => {
-  dispatch({ type: LOGIN_REQUEST });
+export const loginUser = (email, password) => async (dispatch) => {
+  dispatch({ type: SET_MESSAGE, payload: 'Logging in...' });
 
   try {
-    const response = await fetch('http://localhost:5000/api/auth/login', {
+    const response = await fetch('http://192.168.193.146:5000/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
     });
 
     const data = await response.json();
     if (response.ok) {
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: { user: data.user, token: data.token }
-      });
-
-      // Save user info and token
       Cookies.set('token', data.token, { expires: 30, secure: true, sameSite: 'Strict' });
-      localStorage.setItem('user', JSON.stringify(data.user));
-
+      dispatch({ type: SET_USER, payload: data.user });
+      dispatch({ type: SET_MESSAGE, payload: 'Login successful' });
     } else {
-      dispatch({ type: LOGIN_FAILURE, payload: { message: data.msg } });
+      dispatch({ type: SET_MESSAGE, payload: data.msg || 'Login failed' });
     }
   } catch (error) {
-    dispatch({ type: LOGIN_FAILURE, payload: { message: 'Server error' } });
+    dispatch({ type: SET_MESSAGE, payload: 'Server error' });
   }
-};
-
-// Logout action
-export const logout = () => dispatch => {
-  Cookies.remove('token');
-  localStorage.removeItem('user');
-  dispatch({ type: LOGOUT });
 };

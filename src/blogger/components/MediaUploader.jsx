@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImageIcon, VideoIcon, ImageOnIcon, VideoOnIcon, CloseIcon } from '../../../assets/icons/Icon';
+import { ImageIcon, VideoIcon, ImageOnIcon, VideoOnIcon, CloseIcon } from '../../assets/icons/Icon';
 import Notification from './Notification'; // Import the Notification component
 
 const MediaUploader = ({ handleMediaUpload, handleAddMedia, urlInput, setUrlInput }) => {

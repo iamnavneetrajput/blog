@@ -961,7 +961,7 @@ option {
 }
 
 .editor-content {
-  min-height: 300px;
+  max-height: 350px;
   border: 1px solid #ddd;
   padding: 10px;
   margin-top: 20px;
@@ -970,6 +970,7 @@ option {
   white-space: pre-wrap; /* Preserves spacing and wraps text */
   word-wrap: break-word; /* Breaks long words and wraps them to the next line */
   overflow-wrap: break-word; /* Ensures words are wrapped if they exceed the container's width */
+  overflow-y: scroll;
 }
 
 .main-editor-page {
@@ -1153,13 +1154,49 @@ pre code {
 }
 
 .post-category-select{
-  background-color: var(--auth-color);
-  padding: 2px;
+  background-color: var(--button-color--form);
+  padding: 3px;
 }
 
-.post-message{
-  /* display: none; */
+.alignment-menu {
+  position: relative;
+  display: inline-block;
 }
+
+.alignment-options {
+  position: absolute;
+  top: 100%; /* Position it below the alignment button */
+  left: 0;
+  z-index: 10; /* Ensure it's above other elements */
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.alignment-options button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 5px;
+  background-color: #444;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.alignment-options button:hover {
+  background-color: #555;
+}
+
+.alignment-options button:last-child {
+  margin-bottom: 0;
+}
+
 
 /* General notification styles */
 .notification {

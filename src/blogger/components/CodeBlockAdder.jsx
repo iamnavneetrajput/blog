@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
 import 'prismjs/components/prism-javascript'; // Import the language you need
-import { CodeIcon, CloseIcon } from '../../../assets/icons/Icon';
+import { CodeIcon, CloseIcon } from '../../assets/icons/Icon';
 import Notification from './Notification'; // Import the Notification component
 
 const CodeBlockAdder = ({ handleAddCodeBlock }) => {

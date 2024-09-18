@@ -5,7 +5,7 @@ import { CiTextAlignCenter, CiTextAlignLeft, CiTextAlignRight } from 'react-icon
 import MediaUploader from './components/MediaUploader';
 import LinkAdder from './components/LinkAdder';
 import EmojiPicker from './EmojiPicker';
-import { SmileIcon, Bulletpoint, Numbering } from '../../assets/icons/Icon';
+import { SmileIcon, Bulletpoint, Numbering } from '../assets/icons/Icon';
 import CodeBlockAdder from './components/CodeBlockAdder';
 import CategorySelector from './components/CategorySelector'; // Import the CategorySelector component
 

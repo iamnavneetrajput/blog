@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LinkIcon } from '../../../assets/icons/Icon';
+import { LinkIcon } from '../../assets/icons/Icon';
 import Notification from './Notification'; // Import Notification component
 
 const LinkAdder = ({ handleAddLink, urlInput, setUrlInput, linkName, setLinkName }) => {

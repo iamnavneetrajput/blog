@@ -1,5 +1,5 @@
-// src/reducers/userReducer.js
-import { SET_USER, SET_MESSAGE } from './userActions';
+// src/redux/reducers/userReducer.js
+import { SET_USER, SET_MESSAGE } from '../actions/userActions';
 
 const initialState = {
   user: null,
