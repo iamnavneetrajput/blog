@@ -1,17 +1,17 @@
-// src/redux/reducers/userReducer.js
-import { SET_USER, SET_MESSAGE } from '../actions/userActions';
-
 const initialState = {
-  user: null,
-  message: ''
+  userInfo: null,
+  loading: false,
+  error: null,
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_USER:
-      return { ...state, user: action.payload };
-    case SET_MESSAGE:
-      return { ...state, message: action.payload };
+    case 'USER_LOGIN_REQUEST':
+      return { ...state, loading: true };
+    case 'USER_LOGIN_SUCCESS':
+      return { ...state, loading: false, userInfo: action.payload };
+    case 'USER_LOGIN_FAILURE':
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
