@@ -4,6 +4,9 @@ import { FiBold, FiItalic, FiUnderline, FiImage, FiVideo, FiLink, FiCode, FiSave
 import { CiTextAlignCenter, CiTextAlignLeft, CiTextAlignRight, CiImageOn, CiVideoOn } from 'react-icons/ci';
 import { RiCloseFill } from 'react-icons/ri';
 import { MdFormatListBulleted, MdFormatListNumbered } from "react-icons/md";
+import { BiCategory } from "react-icons/bi";
+import { FiUser } from "react-icons/fi";
+import { FiCalendar } from "react-icons/fi";
 
 // Export all icons as reusable components
 export const CloseIcon = (props) => <RiCloseFill {...props} />;
@@ -19,6 +22,9 @@ export const SaveIcon = (props) => <FiSave {...props} />;
 export const EyeIcon = (props) => <FiEye {...props} />;
 export const DeleteIcon = (props) => <FiDelete {...props} />;
 export const SmileIcon = (props) => <FiSmile {...props} />;
+export const calender = (props) => <FiCalendar {...props} />;
+export const User = (props) => <FiUser {...props} />;
+export const Category = (props) => <BiCategory {...props} />;
 
 // Text alignment and media icons
 export const AlignCenterIcon = (props) => <CiTextAlignCenter {...props} />;

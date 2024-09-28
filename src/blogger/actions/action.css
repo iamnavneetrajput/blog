@@ -1,0 +1,61 @@
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+  
+  .button-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 1em; /* Space between buttons */
+  }
+  
+  .button {
+    background-color: #313131;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 0.35em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #4caf50; /* Change color on hover */
+  }
+  
+  .icon {
+    margin-right: 0.5em; /* Space between icon and text */
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .icon.active {
+    color: #4caf50; /* Change color for active state */
+  }
+  
+  .share-wrapper {
+    position: relative;
+  }
+  
+  .share-icons {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5em;
+    background: #212121;
+    padding: 0.5em;
+    border-radius: 0.35em;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+  
+  .share-icons .icon {
+    cursor: pointer;
+    color: white;
+    padding: 0.5em;
+  }
+  
+  .share-icons .icon:hover {
+    background-color: #4caf50; /* Change color on hover */
+  }
+  

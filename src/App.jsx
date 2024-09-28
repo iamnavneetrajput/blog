@@ -6,6 +6,7 @@ import Header from './views/layouts/Header';
 import Submenu from './views/partials/Submenu';
 import Footer from './views/layouts/Footer';
 import Loader from './views/partials/Loader'
+import Postmenu from './views/partials/Postmenu';
 
 // Lazy load components
 const Home = lazy(() => import('./views/layouts/Home'));
@@ -19,6 +20,10 @@ const MainEditorPage = lazy(() => import('./blogger/MainEditorPage'));
 const PreviewPage = lazy(() => import('./blogger/PreviewPage'));
 const PostsList = lazy(() => import('./blogger/PostsList'));
 const OAuth = lazy(() => import('./views/partials/OAuth'));
+const Settings = lazy(() => import('./views/layouts/Settings'));
+// const PostDetailPage = lazy(() => import('./blogger/PostDetailPage'));
+
+import PostDetail from './blogger/PostDetailPage';
 
 // CSS files for styling
 import './App.css';
@@ -95,6 +100,9 @@ const App = () => {
               <Route path="/preview" element={<PreviewPage />} />
               <Route path="/postsList" element={<PostsList />} />
               <Route path="/oauth" element={<OAuth />} />
+              <Route path="/menu" element={<Postmenu />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/post/:id" element={<PostDetail />} />
             </Routes>
           </Suspense>
         </ErrorBoundary>

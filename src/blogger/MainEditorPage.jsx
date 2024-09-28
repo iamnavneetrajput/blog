@@ -27,7 +27,7 @@ const MainEditorPage = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/post', {
+      const response = await axios.post('http://192.168.193.146:5000/api/posts', {
         title: titleText,
         content,
         categoryName: selectedCategory

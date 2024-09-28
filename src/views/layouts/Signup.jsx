@@ -30,7 +30,7 @@ const Register = () => {
 
     if (step === 1) {
       try {
-        const response = await fetch('http://192.168.193.146:5000/api/auth/register', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -54,7 +54,7 @@ const Register = () => {
       }
     } else {
       try {
-        const response = await fetch('http://192.168.193.146:5000/api/auth/verify-otp', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}api/auth/verify-otp`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

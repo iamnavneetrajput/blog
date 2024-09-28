@@ -94,7 +94,7 @@ a.active {
   color: var(--background);
   font-size: 14px;
   line-height: 20px;
-  width: 200px;
+  width: 300px;
   animation: slide .3s ease-out;
 }
 
@@ -678,6 +678,7 @@ option {
 
 /* Button for toggling the filter bar */
 .search-button {
+  width: 20px;
   padding: 8px;
   padding-right: 15px;
   background-color: transparent;
@@ -1000,9 +1001,8 @@ pre {
   max-width: 100%; /* Prevent code block from exceeding screen width */
   background-color: var(--background); /* Background color for code */
   color: var(--text-color); /* Text color for code */
-  padding: 16px;
   border-radius: 5px;
-  font-size: 14px; /* General font size */
+  font-size: 12px; /* General font size */
   line-height: 1.5;
 }
 
@@ -1011,21 +1011,6 @@ pre code {
   display: block;
   white-space: pre-wrap; /* Wrap long lines */
   font-family: Consolas, 'Courier New', monospace;
-}
-
-/* Make code blocks responsive on smaller screens */
-@media (max-width: 768px) {
-  pre {
-    font-size: 12px; /* Smaller font size for better readability */
-    padding: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  pre {
-    font-size: 11px; /* Even smaller font size for very small screens */
-    padding: 10px;
-  }
 }
 
 
@@ -1091,34 +1076,41 @@ pre code {
 }
 
 /* PreviewModal.css */
+
 .preview-modal-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: auto;
-  background: rgba(0, 0, 0, 0.5);
+  height: 100%; /* Ensure it covers the full viewport */
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000; /* Ensure it's on top */
 }
 
+/* Modal container */
 .preview-modal {
-  margin-top: 1rem;
+  margin-top: -10rem;
   background: var(--background);
   padding: 20px;
   color: var(--text-color);
   border-radius: 5px;
   max-width: 80%;
-  max-height: 80%;
+  max-height: 90%; /* Limit the height to 80% of the viewport */
+  overflow-y: auto; /* Enable vertical scrolling when content exceeds modal height */
+  overflow-x: hidden; /* Disable horizontal scrolling */
   position: relative;
 }
 
-.preview-modal img, video{
+/* Ensure images and videos take full width but respect aspect ratio */
+.preview-modal img, .preview-modal video {
   width: 100%;
   height: auto;
 }
 
+/* Close button styling */
 .close-modal {
   position: absolute;
   top: 0;
@@ -1136,6 +1128,7 @@ pre code {
   padding: 2px;
   border-radius: 6px;
 }
+
 
 .toolbar-media {
   display: flex;
@@ -1164,7 +1157,7 @@ pre code {
 }
 
 .alignment-options {
-  position: absolute;
+  /* position: absolute; */
   top: 100%; /* Position it below the alignment button */
   left: 0;
   z-index: 10; /* Ensure it's above other elements */
@@ -1333,3 +1326,216 @@ input[type="color"] {
   width: 90%;
   margin: 0 auto;
 }
+
+.search-results {
+  padding: 10px;
+  position: absolute;
+  top: calc(100% + 55px);
+  width: 300px;
+  right: 0;
+  background-color: rgb(93, 93, 93);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: slide 1s ease-out;
+}
+
+.search-result-item {
+  padding: 8px 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  text-decoration: underline;
+}
+
+.top-searched-posts{
+  text-align: left;
+  padding: 8px 8px;
+}
+
+.top-searched-post-item{
+  cursor: pointer;
+}
+
+.post-detail{
+  width: 80%;
+  margin: auto;
+  color: var(--text-color);
+  background: var(--background);
+}
+
+.post-info{
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+
+.post-info-item {
+  display: flex;
+  align-items: center; /* Aligns SVG and text vertically */
+}
+
+.post-info-item svg {
+  margin-right: 5px; /* Space between icon and text */
+  height: 1.5em;
+  width: 1.5em;
+  align-items: center;
+}
+
+
+.post-content{
+  align-items: center;
+  justify-content: center;
+}
+.post-content img{
+  width: 100%;
+  height: 100%;
+}
+
+.settings-page {
+  width: 600px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: var(--background);
+  border-radius: 8px;
+  color: var(--text-color);
+}
+
+.settings-page h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+  padding: 8px 15px;
+  box-shadow: 0 0 1px var(--text-color);
+  border-radius: 6px;
+}
+
+.setting-item label {
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.btn-primary {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.delete-account{
+  border: none;
+  border-radius: 6px;
+}
+
+.language-select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: var(--background);
+  font-size: 16px;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.language-select:focus {
+  border-color: #007bff;
+}
+
+/* Toggle Switch Styles */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+  margin: 10px;
+}
+
+.toggle-switch .toggle-input {
+  display: none;
+}
+
+.toggle-switch .toggle-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 24px;
+  background-color: #6dae6f;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-switch .toggle-label::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  background-color: #fff;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s;
+}
+
+.toggle-switch .toggle-input:checked + .toggle-label {
+  background-color: #4CAF50;
+}
+
+.toggle-switch .toggle-input:checked + .toggle-label::before {
+  transform: translateX(16px);
+}
+
+.otp-input-container {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.otp-input-container input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  color: var(--text-color);
+  background-color: var(--background);
+  border-radius: 4px;
+}
+
+.otp-input-container button {
+  margin-right: 10px;
+}
+
+.otp-delete-btn{
+  padding: 4px 8px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+

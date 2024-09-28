@@ -1,9 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
-import rootReducer from './reducers'; // Your root reducer
+// redux/store.js
+import { createStore, combineReducers } from 'redux';
+import userReducer from './reducers/userReducer'; // Import the user reducer
 
-const store = configureStore({
-  reducer: rootReducer,
-  devTools: process.env.NODE_ENV !== 'production', // Enables Redux DevTools only in development
+const rootReducer = combineReducers({
+  user: userReducer
 });
+
+const store = createStore(rootReducer);
 
 export default store;

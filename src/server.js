@@ -4,8 +4,9 @@ import authRoutes from './routes/authRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import protectedRoutes from './routes/protectedRoutes.js';
 import categoryRoutes from'./routes/categoryRoutes.js'
+import searchRoutes from './routes/searchRoutes.js';
 import cors from 'cors';
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'; 
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 
@@ -14,7 +15,7 @@ dotenv.config(); // Ensure .env is in the root directory
 console.log("MONGO_URI:", process.env.MONGO_URI); // Verify MONGO_URI
 
 const app = express();
-const PORT = process.env.PORT || 7000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
@@ -28,11 +29,12 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// Routes
+// Routes 
 app.use('/api/auth', authRoutes);
 app.use('/api', protectedRoutes);
 app.use('/api', postRoutes);
 app.use('/api', categoryRoutes);
+app.use('/api', searchRoutes);
 
 
 // Connect to MongoDB

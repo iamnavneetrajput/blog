@@ -1,17 +1,19 @@
-export const loginUser = (email, password) => async (dispatch) => {
-  try {
-    dispatch({ type: 'USER_LOGIN_REQUEST' });
+// redux/actions/userActions.js
 
-    // Make API call to login
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT = 'LOGOUT';
 
-    dispatch({ type: 'USER_LOGIN_SUCCESS', payload: data });
-  } catch (error) {
-    dispatch({ type: 'USER_LOGIN_FAILURE', payload: error.message });
-  }
-};
+export const loginSuccess = (token, user) => ({
+  type: LOGIN_SUCCESS,
+  payload: { token, user }
+});
+
+export const loginFail = (message) => ({
+  type: LOGIN_FAIL,
+  payload: message
+});
+
+export const logout = () => ({
+  type: LOGOUT
+});

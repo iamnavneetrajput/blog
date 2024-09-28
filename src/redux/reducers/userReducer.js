@@ -1,17 +1,35 @@
+// redux/reducers/userReducer.js
+import { LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from '../actions/userActions';
+
 const initialState = {
-  userInfo: null,
-  loading: false,
-  error: null,
+  token: null,
+  user: null,
+  error: null
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'USER_LOGIN_REQUEST':
-      return { ...state, loading: true };
-    case 'USER_LOGIN_SUCCESS':
-      return { ...state, loading: false, userInfo: action.payload };
-    case 'USER_LOGIN_FAILURE':
-      return { ...state, loading: false, error: action.payload };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        token: action.payload.token,
+        user: action.payload.user,
+        error: null
+      };
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        token: null,
+        user: null,
+        error: action.payload
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        token: null,
+        user: null,
+        error: null
+      };
     default:
       return state;
   }

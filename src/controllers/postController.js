@@ -57,3 +57,19 @@ export const getRecentArticles = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Get a post by ID
+export const getPostById = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const post = await Post.findById(postId).populate('category', 'name');
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

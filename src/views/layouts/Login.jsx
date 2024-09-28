@@ -29,7 +29,7 @@ const Login = () => {
     setState(prevState => ({ ...prevState, loading: true, message: '' }));
 
     try {
-      const response = await fetch('http://192.168.193.146:5000/api/auth/login', { // Adjust the endpoint as needed
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, { // Adjust the endpoint as needed
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
