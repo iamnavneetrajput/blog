@@ -21,6 +21,7 @@ const PreviewPage = lazy(() => import('./blogger/PreviewPage'));
 const PostsList = lazy(() => import('./blogger/PostsList'));
 const OAuth = lazy(() => import('./views/partials/OAuth'));
 const Settings = lazy(() => import('./views/layouts/Settings'));
+const ProtectedRoute = lazy(() => import('./routes/protectedRoutes'));
 // const PostDetailPage = lazy(() => import('./blogger/PostDetailPage'));
 
 import PostDetail from './blogger/PostDetailPage';
@@ -85,7 +86,7 @@ const App = () => {
       <div className="app-container">
         <Header />
         <Submenu isNightMode={theme === 'dark'} onToggle={toggleTheme} />
-        
+
         <ErrorBoundary>
           <Suspense fallback={<Loader />}>
             <Routes>
@@ -95,7 +96,9 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard" element={
+                <Dashboard />
+              } />
               <Route path="/blogger" element={<MainEditorPage />} />
               <Route path="/preview" element={<PreviewPage />} />
               <Route path="/postsList" element={<PostsList />} />

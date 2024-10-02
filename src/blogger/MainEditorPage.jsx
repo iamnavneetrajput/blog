@@ -27,7 +27,7 @@ const MainEditorPage = () => {
     }
 
     try {
-      const response = await axios.post('http://192.168.193.146:5000/api/posts', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/posts`, {
         title: titleText,
         content,
         categoryName: selectedCategory

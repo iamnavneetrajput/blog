@@ -59,7 +59,7 @@ const Settings = () => {
             </div>
 
             <div className="setting-item">
-                <label>Push Notification</label>
+                <label>Notification</label>
                 <div className="toggle-switch">
                     <input
                         className="toggle-input"

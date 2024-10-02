@@ -1,11 +1,11 @@
-// redux/store.js
-import { createStore, combineReducers } from 'redux';
-import userReducer from './reducers/userReducer'; // Import the user reducer
+import { configureStore } from '@reduxjs/toolkit';
+import userReducer from './reducers/userSlice'; // Import your user slice
 
-const rootReducer = combineReducers({
-  user: userReducer
+const store = configureStore({
+  reducer: {
+    user: userReducer,  // Add your user reducer
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(), // Add thunk automatically
 });
-
-const store = createStore(rootReducer);
 
 export default store;
